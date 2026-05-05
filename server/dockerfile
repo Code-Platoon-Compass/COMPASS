@@ -10,4 +10,4 @@ RUN  pip install -r requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "task_api.wsgi", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "compass_api.wsgi", "--bind", "0.0.0.0:8000"]
