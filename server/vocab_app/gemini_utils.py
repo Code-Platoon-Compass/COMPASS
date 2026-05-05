@@ -1,6 +1,7 @@
 from google import genai
 from pydantic import BaseModel
 from .models import VocabItem, VocabList
+from django.core.cache import cache 
 import os
 class VocabListItemSchema(BaseModel):
     term: str
