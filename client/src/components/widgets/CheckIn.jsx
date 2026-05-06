@@ -14,8 +14,10 @@ export default function CheckIn({ url }) {
     // date on which form was last opened
     const lastOpened = new Date(unparsedLastOpened);
 
-    // today at midnight
-    const today = new Date().setHours(0, 0, 0, 0);
+    // today at midnight central
+    const today = new Date().setUTCHours(5, 0, 0, 0);
+
+    console.log(new Date(today));
 
     // was it opened no later than midnight today?
     return lastOpened < today;
@@ -27,7 +29,7 @@ export default function CheckIn({ url }) {
    * Update local storage
    */
   const onOpenedForm = () => {
-    localStorage.setItem(lastOpenedKey, JSON.stringify(new Date()));
+    localStorage.setItem(lastOpenedKey, new Date().toISOString());
     setIsFormEnabled(false);
   };
 
