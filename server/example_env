@@ -14,8 +14,4 @@ DB_HOST=
 
 # 3rd Party API Keys
 GOOGLE_CLIENT_ID=
-<<<<<<< HEAD
 GOOGLE_CLIENT_SECRET=
-=======
-GOOGLE_CLIENT_SECRET=
->>>>>>> a243137 (created auth utilities, added simplejwt, and updated CreateStudentView)
