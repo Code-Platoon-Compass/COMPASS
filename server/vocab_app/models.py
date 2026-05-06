@@ -14,7 +14,7 @@ class VocabItem(models.Model):
     vocab_list_url = models.ForeignKey(
         VocabList,
         on_delete=models.CASCADE,
-        
+        related_name='items',
         to_field='lecture_url',
     )
     term = models.TextField()
