@@ -5,7 +5,6 @@ venv/*
 **/migrations/*
 **/postgres-data/*
 **/.vscode/*
-**/dockerfile
 
 # Logs
 logs
