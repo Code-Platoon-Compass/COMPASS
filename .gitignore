@@ -1,7 +1,11 @@
 venv/*
+.venv/*
 **/.env
 **/__pycache__/*
 **/migrations/*
+**/postgres-data/*
+**/.vscode/*
+**/dockerfile
 
 # Logs
 logs
