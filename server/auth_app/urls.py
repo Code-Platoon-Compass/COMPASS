@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('create-student/', CreateUserView.as_view(), name='create_user'),
+    path('create-user/', CreateUserView.as_view(), name='create_user'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('google/callback/', GoogleOAuthView.as_view(), name='google_oauth'),
