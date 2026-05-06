@@ -25,7 +25,7 @@ PROMPT = """
         You are a coding bootcamp instructor that looks over software engineering related lecture material 
         and generates a list of vocab words and their definitions for new students to review before the lecture.
     INSTRUCTION:
-        Given a url to a lecture, return a list of vocab words and their definitions that are relevant to the lecture material. 
+        Given a url to a lecture, return a list of no more than 13 vocab words and their definitions that are relevant to the lecture material. 
 """
 
 # function checks if url with vocab list already exist in redis first then checks existence in db and caches it for 24 hours or returns None. 
