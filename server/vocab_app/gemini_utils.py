@@ -1,13 +1,25 @@
+"""
+Utility functions for generating and retrieving vocabulary lists using the Gemini API.
+
+This module handles:
+- Pydantic schemas for structured Gemini responses
+- Redis caching to avoid redundant DB lookups and API calls
+- Gemini API integration for generating vocab lists from lecture URLs
+- Persisting generated vocab lists and items to the database
+"""
 from google import genai
 from pydantic import BaseModel
 from .models import VocabItem, VocabList
-from django.core.cache import cache 
+from django.core.cache import cache
 import os
+
 class VocabListItemSchema(BaseModel):
+    """Represents a single vocab item returned by Gemini."""
     term: str
-    definition: str    
+    definition: str
 class VocabListSchema(BaseModel):
-   items: list[VocabListItemSchema]
+    """Represents the full vocab list returned by Gemini."""
+    items: list[VocabListItemSchema]
    
 CACHE_TTL = 60 * 60 * 24  # 24 hours in seconds
 
@@ -25,11 +37,23 @@ PROMPT = """
         You are a coding bootcamp instructor that looks over software engineering related lecture material 
         and generates a list of vocab words and their definitions for new students to review before the lecture.
     INSTRUCTION:
-        Given a url to a lecture, return a list of no more than 13 vocab words and their definitions that are relevant to the lecture material. 
+        Given a url to a lecture, return a list of no more than 13 vocab terms and their definitions that 
+        are relevant to the lecture material. 
 """
 
-# function checks if url with vocab list already exist in redis first then checks existence in db and caches it for 24 hours or returns None. 
 def get_vocab_list(lecture_url: str) -> VocabList | None:
+    """
+    Retrieve an existing vocab list for a given lecture URL.
+
+    Checks Redis cache first. On a cache miss, queries the database.
+    If found in the database, caches the result for 24 hours.
+
+    Args:
+        lecture_url: The URL of the lecture to look up.
+
+    Returns:
+        The VocabList instance if it exists, otherwise None.
+    """
     cached = cache.get(lecture_url)
     if cached:
         return cached 
@@ -42,6 +66,19 @@ def get_vocab_list(lecture_url: str) -> VocabList | None:
     return None
 
 def generate_vocab_list(lecture_url: str) -> VocabList:
+    """
+    Generate a vocab list for a given lecture URL using the Gemini API.
+
+    Sends the lecture URL to Gemini with a structured prompt. Parses the
+    response and saves the resulting VocabList and VocabItems to the database.
+    Caches the VocabList in Redis for 24 hours.
+
+    Args:
+        lecture_url: The URL of the lecture to generate vocab for.
+
+    Returns:
+        The newly created VocabList instance.
+    """
     prompt = f"{PROMPT}\nLECTURE_URL: {lecture_url}"
     response = client.models.generate_content(
         model=GEMINI_MODEL,
