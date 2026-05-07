@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import AllDailyLinks, DailyLink
+from .views import AllDailyLinksView, OneDailyLinkView
 
 urlpatterns = [
-    path('<int:cohort_id>/daily_links', AllDailyLinks.as_view(), name='all-daily-links'),
-    path('<int:cohort_id>/daily_links/<int:link_id>', DailyLink.as_view(), name='daily-link')
+    path('<uuid:cohort_id>/daily-links/', AllDailyLinksView.as_view(), name='all-daily-links'),
+    path('<uuid:cohort_id>/daily-links/<int:link_id>/', OneDailyLinkView.as_view(), name='daily-link')
 ]

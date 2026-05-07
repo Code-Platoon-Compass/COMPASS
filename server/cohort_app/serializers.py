@@ -4,4 +4,4 @@ from .models import DailyLink, ResourceLink
 class DailyLinkSerializer(ModelSerializer):    
     class Meta:
         model = DailyLink
-        fields = ['url', 'label', 'cohort']
+        fields = '__all__'

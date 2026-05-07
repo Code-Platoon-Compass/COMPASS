@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 
-
 class Cohort(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.TextField()
@@ -22,17 +21,21 @@ class ValidEmail(models.Model):
 
 
 class ResourceLink(models.Model):
-    url = models.TextField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    url = models.URLField()
     cohort = models.ForeignKey(Cohort, on_delete=models.CASCADE)
     label = models.TextField()
 
     class Meta:
         db_table = 'resource_links'
+        unique_together = [('cohort', 'url')]
 
 class DailyLink(models.Model):
-    url = models.TextField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    url = models.URLField()
     cohort = models.ForeignKey(Cohort, on_delete=models.CASCADE)
     label = models.TextField()
 
     class Meta:
         db_table = 'daily_links'
+        unique_together = [('cohort', 'url')]

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Cohort, DailyLink
+from .models import DailyLink
 from .serializers import DailyLinkSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,34 +7,35 @@ from rest_framework import status as s
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from uuid import UUID
 
 # Create your views here.
 validate = URLValidator()
 
-class AllDailyLinks(APIView):
+class AllDailyLinksView(APIView):
     def get(self, request, cohort_id):
-        links = get_list_or_404(DailyLink, Cohort=cohort_id)
+        links = get_list_or_404(DailyLink, cohort_id=cohort_id)
         serialized_links = DailyLinkSerializer(links, many=True)
         return Response(serialized_links.data, status=s.HTTP_200_OK)
     
     def post(self, request, cohort_id):
         try:
-            validate(request.data.url)        
-            new_daily_link = DailyLinkSerializer(data= {
-                "url": request.data.url,
-                "label": request.data.label,
-                "cohort": get_object_or_404(Cohort, id=cohort_id)})
+            validate(request.data["url"])
+            dailylink_data = {
+                "url": request.data["url"],
+                "label": request.data["label"],
+                "cohort_id": UUID(cohort_id)}
+            return Response(dailylink_data, status=s.HTTP_200_OK)
+            new_daily_link = DailyLinkSerializer(data=dailylink_data)
             if new_daily_link.is_valid():
                 new_daily_link.save()
                 return Response(new_daily_link.data, status=s.HTTP_201_CREATED)
+            else:
+                return Response(new_daily_link.errors, status=s.HTTP_400_BAD_REQUEST)
         except ValidationError as e:
             return Response(e.message, status=s.HTTP_400_BAD_REQUEST)
 
-class DailyLink(APIView):
-    def retrieve_link(self, id):
-        if isinstance(id, int):
-            return get_object_or_404(DailyLink, id=id)
-    
+class OneDailyLinkView(APIView):
     def put(self, request, cohort_id, link_id):
         try:
             if request.data.get("url", None):
