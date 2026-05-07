@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import DailyLink
+from .models import Cohort, DailyLink
 from .serializers import DailyLinkSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -24,7 +24,7 @@ class AllDailyLinksView(APIView):
             dailylink_data = {
                 "url": request.data["url"],
                 "label": request.data["label"],
-                "cohort_id": UUID(cohort_id)}
+                "cohort": get_object_or_404(Cohort, id=cohort_id)}
             return Response(dailylink_data, status=s.HTTP_200_OK)
             new_daily_link = DailyLinkSerializer(data=dailylink_data)
             if new_daily_link.is_valid():
