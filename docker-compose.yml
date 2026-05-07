@@ -8,6 +8,11 @@ services:
       - .env
     ports:
       - "5433:5432"
+  redis:
+    image: redis:latest
+    container_name: compass-redis-container
+    ports:
+      - "6379:6379"
 
   backend:
     build: ./server
@@ -19,6 +24,7 @@ services:
       - ./server:/app
     depends_on:
       - db
+      - redis
 
   frontend:
     image: client-img
