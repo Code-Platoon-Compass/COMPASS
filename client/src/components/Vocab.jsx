@@ -57,12 +57,11 @@ export default function Vocab() {
             </div>
           )}
           {!loading && vocabList && (
-            <ul className="p-[1.5vmin] flex flex-col gap-[1vmin]">
+            <ul className="divide-y divide-white/30 border border-white/30 rounded-lg">
               {vocabList.map((item, index) => (
-                <li key={index} className="grid grid-cols-[14vmin_1px_1fr] text-white text-[1.8vmin]">
-                  <span className="pr-[1vmin]">"{item.term}"</span>
-                  <span className="bg-white/50 mx-[0.5vmin]" />
-                  <span className="pl-[1vmin]">"{item.definition}"</span>
+                <li key={index} className="grid grid-cols-[22vmin_1fr] text-white text-[1.8vmin]">
+                  <span className="px-[1.5vmin] py-[1vmin] border-r border-white/30">{item.term}</span>
+                  <span className="px-[1.5vmin] py-[1vmin]">{item.definition}</span>
                 </li>
               ))}
             </ul>
