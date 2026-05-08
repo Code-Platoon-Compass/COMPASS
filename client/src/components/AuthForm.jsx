@@ -1,75 +1,55 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { handleUserAuth } from '../utilities/authUtilities';
+import { handleGoogleAuth } from '../utilities/authUtilities';
+import { GoogleLogin } from '@react-oauth/google';
 
 const AuthForm = ({setUser}) => {
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [create, setCreate] = useState(true)
+    const [inviteCode, setInviteCode] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        let userDict = {
-            "email":email,
-            "password": password
+    const handleGoogleLoginSuccess = async (credentialResponse) => {
+        if (!inviteCode.trim()) {
+            setErrorMessage('Invite code is required before signing in with Google.')
+            return;
         }
-        // let method = create ? 'CREATE ACCT' : 'LOGIN ACCT'
-        let user = await handleUserAuth(userDict,create)
-        if (user === null){
-            console.log(`fit user: ${ user}`)
-            return 
+
+        const token = credentialResponse.credential;
+        const result = await handleGoogleAuth(token, inviteCode.trim());
+
+        if (result.ok) {
+            setErrorMessage('')
+            setUser(result.data);
+            navigate("/dashboard");
+            return;
         }
-        
-        setUser(user) 
-        setCreate(true)
-        setEmail('')
-        setPassword('')
-        navigate('/home/')
+
+        setErrorMessage(result.error);
     }
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control 
-                        type="email" 
-                        placeholder="Enter email" 
-                        value={email}
-                        onChange={(e)=>setEmail(e.target.value)}
-                    />
-                    <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check 
-                        type="checkbox" 
-                        label={create ? "CREATE ACCOUNT" : "LOG IN"} 
-                        checked={create}
-                        onChange={(e)=>setCreate(e.target.checked)}
-                    />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                    {create ? "CREATE ACCOUNT" : "LOG IN"} 
-                </Button>
-            </Form>
+            <label htmlFor="invite-code">Invite code</label>
+            <input
+                id="invite-code"
+                type="text"
+                value={inviteCode}
+                onChange={(event) => {
+                    setInviteCode(event.target.value)
+                    if (errorMessage) {
+                        setErrorMessage('')
+                    }
+                }}
+                placeholder="Enter your cohort invite code"
+            />
+            {errorMessage ? <p>{errorMessage}</p> : null}
+            <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={() => {
+                    console.log('Login Failed');
+                    alert("Google authentication failed. Please try again.");
+                }}
+            />
         </>
     )
 }

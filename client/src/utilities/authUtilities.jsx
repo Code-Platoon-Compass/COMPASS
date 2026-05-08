@@ -11,17 +11,24 @@ export const test_connection = async() =>{
 		  }
 
 export const handleGoogleAuth = async (token, inviteCode) => {
-    let response = await api.post("auth/google-auth/", {
-        token,
-        invite_code: inviteCode,
-    });
+    try {
+        let response = await api.post("auth/google-auth/", {
+            token,
+            invite_code: inviteCode,
+        });
 
-    if (response.status === 200) {
-        return response.data.email;
+        return {
+            ok: response.status === 200,
+            data: response.data,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            ok: false,
+            data: null,
+            error: error.response?.data?.error || 'Google sign in failed. Please try again.',
+        };
     }
-
-    alert(response.data);
-    return null;
 }
 // export const logout = async()=>{
 //     let token = localStorage.getItem("token")
