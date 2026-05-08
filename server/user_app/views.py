@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-from COMPASS.server.auth_app.utilities import CookieAuthentication
+from auth_app.utilities import CookieAuthentication
 from .models import Student
 from rest_framework import status as s
 from rest_framework.views import APIView
