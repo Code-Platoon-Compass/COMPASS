@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const api = axios.create({
     baseURL: "/api/v1",
+    withCredentials: true,
 });
 
 export const test_connection = async() =>{
@@ -9,13 +10,16 @@ export const test_connection = async() =>{
 		    console.log(response)
 		  }
 
-export const handleGoogleAuth = async (token) => {
-    let response = await api.post("auth/google-auth/", { token });
+export const handleGoogleAuth = async (token, inviteCode) => {
+    let response = await api.post("auth/google-auth/", {
+        token,
+        invite_code: inviteCode,
+    });
+
     if (response.status === 200) {
-        let token = response.data.token;
-        api.defaults.headers.common["Authorization"] = `Token ${token}`;
         return response.data.email;
     }
+
     alert(response.data);
     return null;
 }
