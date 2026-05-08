@@ -81,6 +81,9 @@ class LogoutView(APIView):
         return clear_token_cookies(response)
 
 class GoogleOAuthView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         token = request.data.get('token')
         invite_code = request.data.get('invite_code')
