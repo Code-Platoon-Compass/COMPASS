@@ -12,7 +12,11 @@
     "watcher": "vite build --watch"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@tailwindcss/vite": "^4.2.4",
+=======
+    "@react-oauth/google": "^0.13.5",
+>>>>>>> 1a7dc57 (updated auth frontend utility. Lunch checkpoint: Needs refactoring for migration issues)
     "axios": "^1.16.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
