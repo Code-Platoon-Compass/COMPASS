@@ -18,6 +18,9 @@ load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 
+JWT_ACCESS_COOKIE = 'access_token'
+JWT_REFRESH_COOKIE = 'refresh_token'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,6 +37,16 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
+AUTH_USER_MODEL = 'auth_app.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'auth_app.utilities.CookieAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 # Application definition
 
@@ -46,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'user_app',
     'cohort_app',
     'vocab_app',
     'auth_app',
