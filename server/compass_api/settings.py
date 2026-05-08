@@ -45,6 +45,15 @@ INSTALLED_APPS = [
     'auth_app',
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "auth_app.authentication.APIKeyAuthentication",
+    ],
+}
+
+COMPASS_INVITE_BASE_URL = "https://compass.codeplatoon.org/join"
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

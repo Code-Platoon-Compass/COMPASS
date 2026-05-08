@@ -1,61 +1,42 @@
-import {  useState } from "react";
-import { useLoaderData, useOutletContext } from "react-router-dom";
-import Stack from 'react-bootstrap/Stack';
-import TaskDisplay from "../components/TaskDisplay";
-import TaskForm from "../components/TaskForm";
-import { logout } from "../utilities/authUtilities";
+import CheckIn from "../components/widgets/CheckIn";
+import Vocab from "../components/Vocab";
+import { useState, useEffect } from "react";
+import { fetchInviteLink } from "../utilities/cohortUtilities";
 
 const HomePage = () => {
-    // navigate = useNavigate()
-    // location = useLocation()
-    const {user} = useOutletContext()
-    const [tasks, setTasks] = useState(useLoaderData())
+  const [inviteUrl, setInviteUrl] = useState(null);
 
-    // useEffect(()=>{
-    //     if (user && location.pathname === '/'){
-    //     navigate('/home')}
-    //     else if (!user && location.pathname !='/'){
-    //     navigate('/')
-    //     }
-    // }, [user,location.pathname])
+  // Temporary placeholder values — replace with real ones later
+  const cohortId = "8b0e9f4e-3e4a-4f0a-9a3d-123456789abc";
+  const apiKey = "instructor_test_api_key_12345";
 
-    const addTask = (task) => {
-        setTasks([...tasks, task])
+  useEffect(() => {
+    async function loadInvite() {
+      try {
+        const data = await fetchInviteLink(cohortId, apiKey);
+        setInviteUrl(data.invite_url);
+      } catch (err) {
+        console.error("Error fetching invite link:", err);
+      }
     }
 
-    const rmTask = (rmTask) => {
-        setTasks(tasks.filter((task)=>(
-            task.id !== rmTask.id
-        )))
-    }
+    loadInvite();
+  }, []);
 
-    const updateTask = (editTask) => {
-        setTasks(tasks.map((task)=>(
-            task.id === editTask.id ? editTask : task
-        )))
-    }
+  return (
+    <>
+      <h1>hi i'm the homepage</h1>
 
-     
+      {inviteUrl ? (
+        <p>Invite Link: {inviteUrl}</p>
+      ) : (
+        <p>Loading invite link...</p>
+      )}
 
-    return (
-        <>
-            <h1>Welcome {user && user}: Here are your Tasks <button onClick={async()=>await logout()}>Log Out</button></h1>
-
-            <Stack gap={3}>
-                <TaskForm addTask={addTask}/>
-
-                {tasks.map((task)=>(
-                    <TaskDisplay 
-                        key={task.id} 
-                        task={task}
-                        rmTask={rmTask}
-                        updateTask={updateTask}
-                    />
-                ))}
-
-            </Stack>
-        </>
-    )
-}
+      <Vocab />
+      <CheckIn url="https://example.com" />
+    </>
+  );
+};
 
 export default HomePage;
