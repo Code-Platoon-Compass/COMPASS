@@ -7,6 +7,9 @@ from datetime import timedelta, datetime
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from cohort_app.models import Cohort, ValidEmail
 
 def generate_cookie_time(days=0, minutes=22):
     cookie_life = datetime.utcnow() + timedelta(days=days, minutes=minutes)
@@ -78,5 +81,73 @@ class LogoutView(APIView):
         return clear_token_cookies(response)
 
 class GoogleOAuthView(APIView):
-    pass
+    def post(self, request):
+        token = request.data.get('token')
+        invite_code = request.data.get('invite_code')
+
+        if not token:
+            return Response({'error': 'No token provided'}, status=s.HTTP_400_BAD_REQUEST)
+
+        if not invite_code:
+            return Response({'error': 'Invite code is required'}, status=s.HTTP_400_BAD_REQUEST)
+        
+        try:
+            id_info = id_token.verify_oauth2_token(token, requests.Request(), settings.GOOGLE_CLIENT_ID)
+            email = id_info.get('email')
+            name = id_info.get('name')
+
+            if not email:
+                return Response({'error': 'Google account email is required'}, status=s.HTTP_400_BAD_REQUEST)
+
+            normalized_email = email.strip().lower()
+            normalized_invite_code = invite_code.strip()
+
+            try:
+                cohort = Cohort.objects.get(invite_code=normalized_invite_code)
+            except Cohort.DoesNotExist:
+                return Response({'error': 'Invalid invite code'}, status=s.HTTP_403_FORBIDDEN)
+
+            is_allowed_email = ValidEmail.objects.filter(
+                cohort=cohort,
+                email__iexact=normalized_email,
+            ).exists()
+
+            if not is_allowed_email:
+                return Response({'error': 'Google email is not approved for this cohort'}, status=s.HTTP_403_FORBIDDEN)
+
+            User = get_user_model()
+
+            # Create account only after Google verification and allowlist checks pass.
+            with transaction.atomic():
+                user, created = User.objects.get_or_create(
+                    email=normalized_email,
+                    defaults={
+                        'username': normalized_email,
+                    },
+                )
+
+                if name:
+                    name_parts = name.split(' ', 1)
+                    first_name = name_parts[0]
+                    last_name = name_parts[1] if len(name_parts) > 1 else ''
+
+                    if user.first_name != first_name or user.last_name != last_name:
+                        user.first_name = first_name
+                        user.last_name = last_name
+                        user.save(update_fields=['first_name', 'last_name'])
+
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            refresh_token = str(refresh)
+
+            response_data = {
+                'email': user.email,
+                'name': f"{user.first_name} {user.last_name}".strip(),
+                'created': created,
+                'cohort_id': str(cohort.id),
+            }
+            response = Response(response_data, status=s.HTTP_200_OK)
+            return set_token_cookies(response, access_token, refresh_token)
+        except ValueError:
+            return Response({'error': 'Invalid token'}, status=s.HTTP_400_BAD_REQUEST)
 
