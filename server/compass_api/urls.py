@@ -29,4 +29,5 @@ urlpatterns = [
     #path('api/v1/vocab/', include('vocab_app.urls')), 
     path('api/v1/test', connection),
     path('api/v1/auth/', include('auth_app.urls')),
+    path('api/v1/users/', include('user_app.urls')),
 ]
