@@ -30,6 +30,22 @@ export const handleGoogleAuth = async (token, inviteCode) => {
         };
     }
 }
+
+export const handleLogout = async () => {
+    try {
+        let response = await api.post("auth/logout/");
+
+        return {
+            ok: response.status === 200,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            ok: false,
+            error: error.response?.data?.error || 'Logout failed. Please try again.',
+        };
+    }
+}
 // export const logout = async()=>{
 //     let token = localStorage.getItem("token")
 //     api.defaults.headers.common['Authorization'] = `Token ${token}`
