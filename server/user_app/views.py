@@ -22,7 +22,6 @@ class CreateStudentView(APIView):
     authentication_classes = []
     permission_classes = []
     pass
-        
 
 
 

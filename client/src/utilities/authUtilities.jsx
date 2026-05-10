@@ -46,6 +46,26 @@ export const handleLogout = async () => {
         };
     }
 }
+
+export const restoreSession = async () => {
+    try {
+        // Step 1: use refresh cookie to mint a new access token cookie.
+        await api.post("auth/refresh/");
+
+        // Step 2: fetch user profile using the new access token cookie.
+        const response = await api.get("auth/me/");
+
+        return {
+            ok: response.status === 200,
+            data: response.data,
+        };
+    } catch {
+        return {
+            ok: false,
+            data: null,
+        };
+    }
+}
 // export const logout = async()=>{
 //     let token = localStorage.getItem("token")
 //     api.defaults.headers.common['Authorization'] = `Token ${token}`

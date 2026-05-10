@@ -3,7 +3,11 @@ import AuthForm from '../components/AuthForm';
 import LogoutButton from '../components/LogoutButton';
 
 export default function AuthPage() {
-    const { user, setUser } = useOutletContext();
+    const { user, setUser, authLoading } = useOutletContext();
+
+    if (authLoading) {
+        return <p>Checking session...</p>;
+    }
 
     return (
         <>

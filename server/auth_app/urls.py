@@ -6,5 +6,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('refresh/', RefreshAccessToken.as_view(), name='refresh'),
+    path('me/', CurrentUserView.as_view(), name='current_user'),
     path('google-auth/', GoogleOAuthView.as_view(), name='google_oauth'),
 ]

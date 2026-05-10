@@ -10,6 +10,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from cohort_app.models import Cohort, ValidEmail
+from user_app.models import Student
+from rest_framework.permissions import IsAuthenticated
 
 def generate_cookie_time(days=0, minutes=22):
     cookie_life = datetime.utcnow() + timedelta(days=days, minutes=minutes)
@@ -61,6 +63,20 @@ class RefreshAccessToken(APIView):
             return set_token_cookies(response, new_access_token, new_refresh_token)
         except (TokenError, InvalidToken) as e:
             return Response(str(e), status=s.HTTP_401_UNAUTHORIZED)
+
+
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response(
+            {
+                'email': user.email,
+                'name': f"{user.first_name} {user.last_name}".strip(),
+            },
+            status=s.HTTP_200_OK,
+        )
 
 class CreateUserView(APIView):
     authentication_classes = []
@@ -138,6 +154,19 @@ class GoogleOAuthView(APIView):
                         user.first_name = first_name
                         user.last_name = last_name
                         user.save(update_fields=['first_name', 'last_name'])
+
+                # google_id is the unique identifier Google gives every user (called 'sub' in the token).
+                # get_or_create means: look for an existing Student with this google_id;
+                # if none exists, create one with the provided defaults.
+                google_id = id_info.get('sub')
+                Student.objects.get_or_create(
+                    google_id=google_id,
+                    defaults={
+                        'cohort': cohort,
+                        'name': name or normalized_email,
+                        'email': normalized_email,
+                    },
+                )
 
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
