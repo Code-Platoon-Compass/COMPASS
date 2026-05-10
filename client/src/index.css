@@ -33,9 +33,7 @@
     font-family: var(--font-sans);
     line-height: 1.6;
     background:
-      radial-gradient(circle at 10% 15%, rgba(80, 119, 55, 0.15), transparent 45%),
-      radial-gradient(circle at 90% 10%, rgba(255, 96, 13, 0.12), transparent 40%),
-      #f7f8f3;
+      linear-gradient(135deg, var(--color-action-orange) -50%, var(--color-tactical-teal) 100%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -51,45 +49,52 @@
   }
 
   .auth-panel {
-    @apply w-full max-w-2xl border-command-green bg-[rgba(218,217,217,0.35)] p-8 shadow-sm;
+    @apply w-full max-w-2xl border-command-green bg-[#1e5a7a] p-8 shadow-sm;
     border-radius: var(--radius-box);
     border-width: 2px;
   }
 
   .heading-2 {
+    @apply text-white text-center mb-6;
     margin: 0;
     font-family: var(--font-heading);
     font-size: clamp(1.75rem, 3vw, 2rem);
     line-height: 1.25;
     font-weight: 700;
-    color: var(--color-cadet-blue);
+    
   }
 
   .body-text {
+    @apply text-center mb-8 bg-stealth-gray rounded-lg;
     margin: 0;
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.6;
-    color: var(--color-guardian-gray);
+    color: var(--color-cadet-blue);
   }
 
   .auth-meta {
     @apply mb-6 flex flex-wrap items-center gap-4;
+    
   }
 
   .auth-form {
     @apply flex flex-col gap-6;
+    
+
   }
 
   .form-block {
     @apply flex flex-col gap-2;
+    
   }
 
   .form-label {
+    @apply text-white;
     font-family: var(--font-heading);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--color-cadet-blue);
+    
   }
 
   .form-input {
@@ -121,6 +126,28 @@
   }
 
   .btn-primary:disabled {
+    @apply cursor-not-allowed opacity-70;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center bg-white px-6 py-3 text-cadet-blue transition;
+    border-radius: var(--radius-box);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    border: 2px solid var(--color-cadet-blue);
+  }
+
+  .btn-secondary:hover {
+    @apply bg-[#eef4f7];
+  }
+
+  .btn-secondary:focus-visible {
+    outline: 3px solid rgba(59, 127, 130, 0.45);
+    outline-offset: 2px;
+  }
+
+  .btn-secondary:disabled {
     @apply cursor-not-allowed opacity-70;
   }
 

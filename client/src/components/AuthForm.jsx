@@ -27,6 +27,10 @@ const AuthForm = ({setUser}) => {
         setErrorMessage(result.error);
     }
 
+    const openGoogleAccountChooser = () => {
+        window.open('https://accounts.google.com/AccountChooser', '_blank', 'noopener,noreferrer');
+    }
+
     return (
         <div className="auth-form">
             <div className="form-block">
@@ -50,6 +54,7 @@ const AuthForm = ({setUser}) => {
 
             <div className="google-wrap">
                 <GoogleLogin
+                    auto_select={false}
                     onSuccess={handleGoogleLoginSuccess}
                     onError={() => {
                         console.log('Login Failed');
@@ -57,6 +62,14 @@ const AuthForm = ({setUser}) => {
                     }}
                 />
             </div>
+
+            <button
+                className="btn-secondary"
+                type="button"
+                onClick={openGoogleAccountChooser}
+            >
+                Use a different Google account
+            </button>
         </div>
     )
 }

@@ -1,6 +1,7 @@
 from rest_framework import status as s
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import logging
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from datetime import timedelta, datetime
@@ -12,6 +13,8 @@ from django.db import transaction
 from cohort_app.models import Cohort, ValidEmail
 from user_app.models import Student
 from rest_framework.permissions import IsAuthenticated
+
+logger = logging.getLogger(__name__)
 
 def generate_cookie_time(days=0, minutes=22):
     cookie_life = datetime.utcnow() + timedelta(days=days, minutes=minutes)
@@ -180,6 +183,8 @@ class GoogleOAuthView(APIView):
             }
             response = Response(response_data, status=s.HTTP_200_OK)
             return set_token_cookies(response, access_token, refresh_token)
-        except ValueError:
+        except ValueError as e:
+            import traceback
+            logger.error(f'Google token verification failed: {str(e)}\n{traceback.format_exc()}')
             return Response({'error': 'Invalid token'}, status=s.HTTP_400_BAD_REQUEST)
 
