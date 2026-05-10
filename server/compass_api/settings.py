@@ -62,8 +62,7 @@ INSTALLED_APPS = [
     'user_app',
     'cohort_app',
     'vocab_app',
-    'auth_app',
-    'rest_framework'
+    'auth_app'
 ]
 
 MIDDLEWARE = [
@@ -105,8 +104,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': '5432',
+        'HOST': os.getenv('POSTGRES_HOST') or os.getenv('DB_HOST') or 'db',
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
