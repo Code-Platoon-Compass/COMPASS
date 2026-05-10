@@ -3,12 +3,16 @@ anyio==4.13.0
 asgiref==3.11.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1a7dc57 (updated auth frontend utility. Lunch checkpoint: Needs refactoring for migration issues)
+=======
+>>>>>>> 72bce2d9b4c3dcd1c600c9e11e675aa4fcafe918
 certifi==2026.4.22
 cffi==2.0.0
 charset-normalizer==3.4.7
 cryptography==48.0.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 distro==1.9.0
 Django==6.0.3
@@ -23,11 +27,22 @@ httpcore==1.0.9
 httpx==0.28.1
 idna==3.13
 packaging==26.0
+=======
+Django==6.0.5
+djangorestframework==3.17.1
+djangorestframework_simplejwt==5.5.1
+dotenv==0.9.9
+google-auth==2.52.0
+gunicorn==25.1.0
+idna==3.13
+load-dotenv==0.1.0
+>>>>>>> 72bce2d9b4c3dcd1c600c9e11e675aa4fcafe918
 psycopg==3.3.3
 psycopg-binary==3.3.3
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
 pycparser==3.0
+<<<<<<< HEAD
 pydantic==2.13.3
 pydantic_core==2.46.3
 python-dotenv==1.2.2
@@ -67,3 +82,12 @@ typing_extensions==4.15.0
 urllib3==2.7.0
 typing_extensions==4.15.0
 >>>>>>> 1a7dc57 (updated auth frontend utility. Lunch checkpoint: Needs refactoring for migration issues)
+=======
+PyJWT==2.12.1
+python-dotenv==1.2.2
+requests==2.33.1
+sqlparse==0.5.5
+typing_extensions==4.15.0
+urllib3==2.7.0
+typing_extensions==4.15.0
+>>>>>>> 72bce2d9b4c3dcd1c600c9e11e675aa4fcafe918

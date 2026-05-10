@@ -13,10 +13,14 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@tailwindcss/vite": "^4.2.4",
 =======
     "@react-oauth/google": "^0.13.5",
 >>>>>>> 1a7dc57 (updated auth frontend utility. Lunch checkpoint: Needs refactoring for migration issues)
+=======
+    "@react-oauth/google": "^0.13.5",
+>>>>>>> 72bce2d9b4c3dcd1c600c9e11e675aa4fcafe918
     "axios": "^1.16.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
