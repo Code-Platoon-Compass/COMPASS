@@ -1,10 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Cohort, DailyLink, ResourceLink
-
-class CohortSerializer(ModelSerializer):
-    class Meta:
-        model = Cohort
-        fields = '__all__'
+from .models import DailyLink, ResourceLink
 
 class DailyLinkSerializer(ModelSerializer):    
     class Meta:
