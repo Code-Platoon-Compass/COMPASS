@@ -2,6 +2,7 @@ import CheckIn from "../components/widgets/CheckIn";
 import Vocab from "../components/Vocab";
 import DailyLinks from "../components/widgets/DailyLinks";
 
+
 const HomePage = () => {
 
   return (
