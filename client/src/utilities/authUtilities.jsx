@@ -12,10 +12,13 @@ export const test_connection = async() =>{
 
 export const handleGoogleAuth = async (token, inviteCode) => {
     try {
-        let response = await api.post("auth/google-auth/", {
-            token,
-            invite_code: inviteCode,
-        });
+        const payload = { token };
+
+        if (inviteCode?.trim()) {
+            payload.invite_code = inviteCode.trim();
+        }
+
+        let response = await api.post("auth/google-auth/", payload);
 
         return {
             ok: response.status === 200,

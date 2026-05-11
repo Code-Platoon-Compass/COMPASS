@@ -9,13 +9,8 @@ const AuthForm = ({setUser}) => {
     const navigate = useNavigate()
 
     const handleGoogleLoginSuccess = async (credentialResponse) => {
-        if (!inviteCode.trim()) {
-            setErrorMessage('Invite code is required before signing in with Google.')
-            return;
-        }
-
         const token = credentialResponse.credential;
-        const result = await handleGoogleAuth(token, inviteCode.trim());
+        const result = await handleGoogleAuth(token, inviteCode);
 
         if (result.ok) {
             setErrorMessage('')
@@ -34,7 +29,7 @@ const AuthForm = ({setUser}) => {
     return (
         <div className="auth-form">
             <div className="form-block">
-                <label className="form-label" htmlFor="invite-code">Invite code</label>
+                <label className="form-label" htmlFor="invite-code">Invite code (first sign in only)</label>
                 <input
                     className="form-input"
                     id="invite-code"
@@ -46,7 +41,7 @@ const AuthForm = ({setUser}) => {
                             setErrorMessage('')
                         }
                     }}
-                    placeholder="Enter your cohort invite code"
+                    placeholder="Enter your cohort invite code if this is your first login"
                 />
             </div>
 

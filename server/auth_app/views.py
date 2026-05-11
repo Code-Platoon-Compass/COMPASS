@@ -105,37 +105,49 @@ class GoogleOAuthView(APIView):
 
     def post(self, request):
         token = request.data.get('token')
-        invite_code = request.data.get('invite_code')
+        invite_code = (request.data.get('invite_code') or '').strip()
 
         if not token:
             return Response({'error': 'No token provided'}, status=s.HTTP_400_BAD_REQUEST)
-
-        if not invite_code:
-            return Response({'error': 'Invite code is required'}, status=s.HTTP_400_BAD_REQUEST)
         
         try:
             id_info = id_token.verify_oauth2_token(token, requests.Request(), settings.GOOGLE_CLIENT_ID)
             email = id_info.get('email')
             name = id_info.get('name')
+            google_id = id_info.get('sub')
 
             if not email:
                 return Response({'error': 'Google account email is required'}, status=s.HTTP_400_BAD_REQUEST)
 
+            if not google_id:
+                return Response({'error': 'Google account identifier is required'}, status=s.HTTP_400_BAD_REQUEST)
+
             normalized_email = email.strip().lower()
-            normalized_invite_code = invite_code.strip()
+            cohort = None
 
-            try:
-                cohort = Cohort.objects.get(invite_code=normalized_invite_code)
-            except Cohort.DoesNotExist:
-                return Response({'error': 'Invalid invite code'}, status=s.HTTP_403_FORBIDDEN)
+            existing_student = Student.objects.select_related('cohort').filter(google_id=google_id).first()
 
-            is_allowed_email = ValidEmail.objects.filter(
-                cohort=cohort,
-                email__iexact=normalized_email,
-            ).exists()
+            # Returning users can sign in without re-entering the cohort invite code.
+            if existing_student:
+                cohort = existing_student.cohort
+                if cohort is None:
+                    return Response({'error': 'Student is not assigned to a cohort'}, status=s.HTTP_403_FORBIDDEN)
+            else:
+                if not invite_code:
+                    return Response({'error': 'Invite code is required for first sign in'}, status=s.HTTP_400_BAD_REQUEST)
 
-            if not is_allowed_email:
-                return Response({'error': 'Google email is not approved for this cohort'}, status=s.HTTP_403_FORBIDDEN)
+                try:
+                    cohort = Cohort.objects.get(invite_code=invite_code)
+                except Cohort.DoesNotExist:
+                    return Response({'error': 'Invalid invite code'}, status=s.HTTP_403_FORBIDDEN)
+
+                is_allowed_email = ValidEmail.objects.filter(
+                    cohort=cohort,
+                    email__iexact=normalized_email,
+                ).exists()
+
+                if not is_allowed_email:
+                    return Response({'error': 'Google email is not approved for this cohort'}, status=s.HTTP_403_FORBIDDEN)
 
             User = get_user_model()
 
@@ -158,18 +170,27 @@ class GoogleOAuthView(APIView):
                         user.last_name = last_name
                         user.save(update_fields=['first_name', 'last_name'])
 
-                # google_id is the unique identifier Google gives every user (called 'sub' in the token).
-                # get_or_create means: look for an existing Student with this google_id;
-                # if none exists, create one with the provided defaults.
-                google_id = id_info.get('sub')
-                Student.objects.get_or_create(
-                    google_id=google_id,
-                    defaults={
-                        'cohort': cohort,
-                        'name': name or normalized_email,
-                        'email': normalized_email,
-                    },
-                )
+                if existing_student:
+                    student_updates = []
+
+                    if existing_student.email != normalized_email:
+                        existing_student.email = normalized_email
+                        student_updates.append('email')
+
+                    expected_name = name or normalized_email
+                    if existing_student.name != expected_name:
+                        existing_student.name = expected_name
+                        student_updates.append('name')
+
+                    if student_updates:
+                        existing_student.save(update_fields=student_updates)
+                else:
+                    Student.objects.create(
+                        google_id=google_id,
+                        cohort=cohort,
+                        name=name or normalized_email,
+                        email=normalized_email,
+                    )
 
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
