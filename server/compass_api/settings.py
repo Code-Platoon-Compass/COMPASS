@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -33,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
@@ -41,6 +42,7 @@ AUTH_USER_MODEL = 'auth_app.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        "auth_app.authentication.APIKeyAuthentication",
         'auth_app.utilities.CookieAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -64,11 +66,6 @@ INSTALLED_APPS = [
     'auth_app'
 ]
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "auth_app.authentication.APIKeyAuthentication",
-    ],
-}
 
 COMPASS_INVITE_BASE_URL = "https://compass.codeplatoon.org/join"
 
@@ -165,4 +162,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Disable Redis during tests
+if 'test' in sys.argv:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "test-cache"
+        }
+    }
 
