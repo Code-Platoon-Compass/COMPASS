@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from instructor_app.models import Instructor
-from .models import DailyLink, ResourceLink
-from .serializers import DailyLinkSerializer, ResourceLinkSerializer
+from .models import *
+from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status as s
 from django.shortcuts import get_object_or_404, get_list_or_404
+from secrets import token_urlsafe
 
 # Create your views here.
 authentication_classes = []
@@ -110,5 +111,20 @@ class OneResourceLinkView(APIView):
             ret_str = f"{resource_link.label} ({resource_link.url})"
             resource_link.delete()
             return Response(f"{ret_str} has been deleted", status=s.HTTP_200_OK)
+        else:
+            return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)
+        
+class CreateCohortView(APIView):
+    def post(self, request):
+        if auth_api_key(request):
+            cohort_data = {
+                'name': request.data['name'],
+                'invite_code': token_urlsafe(10)
+            }
+            new_cohort = CohortSerializer(data=cohort_data)
+            if new_cohort.is_valid():
+                new_cohort.save()
+                new_id = new_cohort.data['id']
+                
         else:
             return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)
