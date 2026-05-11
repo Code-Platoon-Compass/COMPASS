@@ -23,7 +23,9 @@ class VocabListSchema(BaseModel):
    
 CACHE_TTL = 60 * 60 * 24  # 24 hours in seconds
 
-client = genai.Client(api_key=os.getenv('GEMINI_API_KEY')) 
+# Temporary disable until GEMINI_API_KEY is available.
+# client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+client = None
 
 GEMINI_MODEL = 'gemini-2.5-flash-lite'
 
@@ -80,6 +82,9 @@ def generate_vocab_list(lecture_url: str) -> VocabList:
         The newly created VocabList instance.
     """
     prompt = f"{PROMPT}\nLECTURE_URL: {lecture_url}"
+    if client is None:
+        raise RuntimeError('Gemini integration is temporarily disabled until GEMINI_API_KEY is available.')
+
     response = client.models.generate_content(
         model=GEMINI_MODEL,
         contents=prompt,

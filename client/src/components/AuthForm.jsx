@@ -1,76 +1,71 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { handleUserAuth } from '../utilities/authUtilities';
+import { handleGoogleAuth } from '../utilities/authUtilities';
+import { GoogleLogin } from '@react-oauth/google';
 
 const AuthForm = ({setUser}) => {
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [create, setCreate] = useState(true)
+    const [inviteCode, setInviteCode] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        let userDict = {
-            "email":email,
-            "password": password
+    const handleGoogleLoginSuccess = async (credentialResponse) => {
+        const token = credentialResponse.credential;
+        const result = await handleGoogleAuth(token, inviteCode);
+
+        if (result.ok) {
+            setErrorMessage('')
+            setUser(result.data);
+            navigate("/dashboard");
+            return;
         }
-        // let method = create ? 'CREATE ACCT' : 'LOGIN ACCT'
-        let user = await handleUserAuth(userDict,create)
-        if (user === null){
-            console.log(`fit user: ${ user}`)
-            return 
-        }
-        
-        setUser(user) 
-        setCreate(true)
-        setEmail('')
-        setPassword('')
-        navigate('/home/')
+
+        setErrorMessage(result.error);
+    }
+
+    const openGoogleAccountChooser = () => {
+        window.open('https://accounts.google.com/AccountChooser', '_blank', 'noopener,noreferrer');
     }
 
     return (
-        <>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control 
-                        type="email" 
-                        placeholder="Enter email" 
-                        value={email}
-                        onChange={(e)=>setEmail(e.target.value)}
-                    />
-                    <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
+        <div className="auth-form">
+            <div className="form-block">
+                <label className="form-label" htmlFor="invite-code">Invite code (first sign in only)</label>
+                <input
+                    className="form-input"
+                    id="invite-code"
+                    type="text"
+                    value={inviteCode}
+                    onChange={(event) => {
+                        setInviteCode(event.target.value)
+                        if (errorMessage) {
+                            setErrorMessage('')
+                        }
+                    }}
+                    placeholder="Enter your cohort invite code if this is your first login"
+                />
+            </div>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                    />
-                </Form.Group>
+            {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
 
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check 
-                        type="checkbox" 
-                        label={create ? "CREATE ACCOUNT" : "LOG IN"} 
-                        checked={create}
-                        onChange={(e)=>setCreate(e.target.checked)}
-                    />
-                </Form.Group>
+            <div className="google-wrap">
+                <GoogleLogin
+                    auto_select={false}
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={() => {
+                        console.log('Login Failed');
+                        alert("Google authentication failed. Please try again.");
+                    }}
+                />
+            </div>
 
-                <Button variant="primary" type="submit">
-                    {create ? "CREATE ACCOUNT" : "LOG IN"} 
-                </Button>
-            </Form>
-        </>
+            <button
+                className="btn-secondary"
+                type="button"
+                onClick={openGoogleAccountChooser}
+            >
+                Use a different Google account
+            </button>
+        </div>
     )
 }
 
