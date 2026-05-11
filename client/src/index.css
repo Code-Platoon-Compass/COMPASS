@@ -53,6 +53,9 @@
   .hero-content {
     @apply max-w-3xl text-center mx-auto py-20 px-6;
   }
+  .start-btn {
+    @apply mt-8 flex justify-center;
+  }
   .auth-page {
     @apply flex min-h-screen items-center justify-center px-6 py-12;
   }
@@ -161,10 +164,11 @@
   }
 
   .error-text {
+    @apply text-center text-3xl bg-stealth-gray text-red-600 rounded-lg;
     margin: 0;
     font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: #b42318;
+    /* font-size: 5rem;
+    color: #b42318; */
   }
 
   .google-wrap {
