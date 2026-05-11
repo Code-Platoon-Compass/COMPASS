@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from cohort_app.models import Cohort, ValidEmail
-from user_app.models import Student
+from .models import Student
 from rest_framework.permissions import IsAuthenticated
 
 logger = logging.getLogger(__name__)
