@@ -1,9 +1,7 @@
 from rest_framework import status as s
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from cohort_app.models import Cohort, ValidEmail
 from .models import Instructor
-from rest_framework.permissions import IsAuthenticated
 from .serializers import InstructorSerializer
 from secrets import token_hex
 
@@ -13,6 +11,9 @@ def auth_api_key(request):
     return len(Instructor.objects.filter(api_key=api_key)) == 1
 
 class OneInstructorView(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
     def post(self, request):
         if auth_api_key(request):
             data = {
