@@ -4,6 +4,8 @@ from .views import (
     OneDailyLinkView,
     AllResourceLinksView,
     OneResourceLinkView,
+    AllValidEmailsView,
+    OneValidEmailView,
 )
 from .views_invite import CohortInviteLinkView
 
@@ -37,5 +39,17 @@ urlpatterns = [
         '<uuid:cohort_id>/resource-links/<uuid:link_id>/',
         OneResourceLinkView.as_view(),
         name='resource-link'
+    ),
+
+    # Valid emails
+    path(
+        '<uuid:cohort_id>/emails/',
+        AllValidEmailsView.as_view(),
+        name='all-valid-emails'
+    ),
+    path(
+        '<uuid:cohort_id>/emails/<uuid:email_id>/',
+        OneValidEmailView.as_view(),
+        name='one-valid-email'
     ),
 ]

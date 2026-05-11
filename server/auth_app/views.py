@@ -15,6 +15,7 @@ from .models import Student
 from rest_framework.permissions import IsAuthenticated
 
 logger = logging.getLogger(__name__)
+GOOGLE_TOKEN_CLOCK_SKEW_SECONDS = 10
 
 def generate_cookie_time(days=0, minutes=22):
     cookie_life = datetime.utcnow() + timedelta(days=days, minutes=minutes)
@@ -111,7 +112,12 @@ class GoogleOAuthView(APIView):
             return Response({'error': 'No token provided'}, status=s.HTTP_400_BAD_REQUEST)
         
         try:
-            id_info = id_token.verify_oauth2_token(token, requests.Request(), settings.GOOGLE_CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(
+                token,
+                requests.Request(),
+                settings.GOOGLE_CLIENT_ID,
+                clock_skew_in_seconds=GOOGLE_TOKEN_CLOCK_SKEW_SECONDS,
+            )
             email = id_info.get('email')
             name = id_info.get('name')
             google_id = id_info.get('sub')
@@ -205,7 +211,5 @@ class GoogleOAuthView(APIView):
             response = Response(response_data, status=s.HTTP_200_OK)
             return set_token_cookies(response, access_token, refresh_token)
         except ValueError as e:
-            import traceback
-            logger.error(f'Google token verification failed: {str(e)}\n{traceback.format_exc()}')
+            logger.exception('Google token verification failed: %s', str(e))
             return Response({'error': 'Invalid token'}, status=s.HTTP_400_BAD_REQUEST)
-
