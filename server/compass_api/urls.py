@@ -27,5 +27,6 @@ urlpatterns = [
     path('api/v1/test', connection),
     path('api/v1/auth/', include('auth_app.urls')),
     path('api/v1/cohorts/', include("cohort_app.urls")),
-    path('api/v1/auth/', include("auth_app.urls"))
+    path('api/v1/auth/', include("auth_app.urls")),
+    path('api/v1/instructor/', include("instructor_app.urls"))
 ]

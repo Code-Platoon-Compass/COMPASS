@@ -11,10 +11,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from cohort_app.models import Cohort, ValidEmail
-from .models import Instructor, Student
+from .models import Student
 from rest_framework.permissions import IsAuthenticated
-from .serializers import InstructorSerializer
-from secrets import token_hex
 
 logger = logging.getLogger(__name__)
 
@@ -48,10 +46,6 @@ def clear_token_cookies(response):
     response.delete_cookie(settings.JWT_ACCESS_COOKIE, samesite='Lax')
     response.delete_cookie(settings.JWT_REFRESH_COOKIE, samesite='Lax')
     return response
-
-def auth_api_key(request):
-    api_key = request.headers.get("X-Api-Key", "")
-    return len(Instructor.objects.filter(api_key=api_key)) == 1
 
 class RefreshAccessToken(APIView):
     authentication_classes = []
@@ -214,21 +208,3 @@ class GoogleOAuthView(APIView):
             import traceback
             logger.error(f'Google token verification failed: {str(e)}\n{traceback.format_exc()}')
             return Response({'error': 'Invalid token'}, status=s.HTTP_400_BAD_REQUEST)
-
-class OneInstructorView(APIView):
-    def post(self, request):
-        # TODO: link to superuser, see discussion
-        if auth_api_key(request):
-            data = {
-                "name": request.data['name'],
-                "email": request.data['email'],
-                "api_key": token_hex(16)
-            }
-            new_instructor = InstructorSerializer(data=data)
-            if new_instructor.is_valid():
-                new_instructor.save()
-                return Response(new_instructor.data, status=s.HTTP_201_CREATED)
-            else:
-                return Response(new_instructor.errors, status=s.HTTP_400_BAD_REQUEST)
-        else:
-            return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)

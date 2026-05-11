@@ -8,5 +8,4 @@ urlpatterns = [
     path('refresh/', RefreshAccessToken.as_view(), name='refresh'),
     path('me/', CurrentUserView.as_view(), name='current_user'),
     path('google-auth/', GoogleOAuthView.as_view(), name='google_oauth'),
-    path('instructors/', OneInstructorView.as_view(), name='auth-instructor'),
 ]
