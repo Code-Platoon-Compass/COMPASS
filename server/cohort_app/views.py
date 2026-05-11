@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from auth_app.models import Instructor
+from instructor_app.models import Instructor
 from .models import DailyLink, ResourceLink, ValidEmail
 from .serializers import DailyLinkSerializer, ResourceLinkSerializer, ValidEmailSerializer
 from rest_framework.views import APIView
@@ -8,6 +8,9 @@ from rest_framework import status as s
 from django.shortcuts import get_object_or_404, get_list_or_404
 
 # Create your views here.
+authentication_classes = []
+permission_classes = []
+
 def auth_api_key(request):
     api_key = request.headers.get("X-Api-Key", "")
     return len(Instructor.objects.filter(api_key=api_key)) == 1
