@@ -11,7 +11,7 @@ const HomePage = () => {
                     <h1 className="hero-title">Welcome to COMPASS</h1>
                     <p className="hero-description">Your all-in-one tool for navigating the Code Platoon curriculum and community.</p>
                 </div>
-                <div>
+                <div className="start-btn">
                     <button className="btn-primary" onClick={() => window.location.href = '/auth'}>Get Started</button>
                 </div>
             </section>
