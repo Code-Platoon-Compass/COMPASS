@@ -27,30 +27,50 @@ const AuthForm = ({setUser}) => {
         setErrorMessage(result.error);
     }
 
+    const openGoogleAccountChooser = () => {
+        window.open('https://accounts.google.com/AccountChooser', '_blank', 'noopener,noreferrer');
+    }
+
     return (
-        <>
-            <label htmlFor="invite-code">Invite code</label>
-            <input
-                id="invite-code"
-                type="text"
-                value={inviteCode}
-                onChange={(event) => {
-                    setInviteCode(event.target.value)
-                    if (errorMessage) {
-                        setErrorMessage('')
-                    }
-                }}
-                placeholder="Enter your cohort invite code"
-            />
-            {errorMessage ? <p>{errorMessage}</p> : null}
-            <GoogleLogin
-                onSuccess={handleGoogleLoginSuccess}
-                onError={() => {
-                    console.log('Login Failed');
-                    alert("Google authentication failed. Please try again.");
-                }}
-            />
-        </>
+        <div className="auth-form">
+            <div className="form-block">
+                <label className="form-label" htmlFor="invite-code">Invite code</label>
+                <input
+                    className="form-input"
+                    id="invite-code"
+                    type="text"
+                    value={inviteCode}
+                    onChange={(event) => {
+                        setInviteCode(event.target.value)
+                        if (errorMessage) {
+                            setErrorMessage('')
+                        }
+                    }}
+                    placeholder="Enter your cohort invite code"
+                />
+            </div>
+
+            {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
+
+            <div className="google-wrap">
+                <GoogleLogin
+                    auto_select={false}
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={() => {
+                        console.log('Login Failed');
+                        alert("Google authentication failed. Please try again.");
+                    }}
+                />
+            </div>
+
+            <button
+                className="btn-secondary"
+                type="button"
+                onClick={openGoogleAccountChooser}
+            >
+                Use a different Google account
+            </button>
+        </div>
     )
 }
 

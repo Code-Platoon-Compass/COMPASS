@@ -25,11 +25,11 @@ export default function LogoutButton() {
     };
 
     return (
-        <>
-            <button type="button" onClick={onLogout} disabled={isSigningOut}>
+        <div className="flex flex-col gap-2">
+            <button className="btn-primary" type="button" onClick={onLogout} disabled={isSigningOut}>
                 {isSigningOut ? 'Signing out...' : 'Sign out'}
             </button>
-            {errorMessage ? <p>{errorMessage}</p> : null}
-        </>
+            {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
+        </div>
     );
 }
