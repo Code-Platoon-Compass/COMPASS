@@ -18,7 +18,10 @@ export default function Dashboard() {
             <CheckIn url="https://example.com" />
             <TimezoneClock />
             <LogoutButton />
-            { user && <DailyLinks url={`/api/v1/cohorts/${user["cohort_id"]}/daily-links`} />}
+            { user && <DailyLinks headerText={"Daily Links"} url={`/api/v1/cohorts/${user["cohort_id"]}/daily-links`} />}
+            { user && <DailyLinks headerText={"Resources"} url={`/api/v1/cohorts/${user["cohort_id"]}/resource-links`} />}
         </>
     )
 }
+
+
