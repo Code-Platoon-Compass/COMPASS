@@ -47,16 +47,19 @@
 
 @layer components {
   .hero {
-    @apply bg-tactical-teal text-white;
+    @apply bg-cadet-blue text-white;
   }
   .hero-title {
-    @apply text-white text-4xl md:text-5xl font-heading font-bold mb-4;
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 14px;
   }
-  .hero-content {
-    @apply max-w-3xl text-center mx-auto py-20 px-6;
-  }
-  .start-btn {
-    @apply mt-8 flex justify-center;
+  .hero-title em {
+    color: var(--color-action-orange);
+    font-style: italic;
   }
   .auth-page {
     @apply flex min-h-screen items-center justify-center px-6 py-12;
@@ -179,5 +182,357 @@
 
   .logout-btn-wrapper {
     @apply mt-8 flex justify-center;
+  }
+
+  /* ── Nav ── */
+  .cp-nav {
+    background: var(--color-tactical-teal);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    height: 70px;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--color-cadet-blue);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo-text {
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo-sub {
+    color: var(--color-action-orange);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ── Hero ── */
+  .hero-inner {
+    padding: 52px 48px 44px;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-left {
+    flex: 1;
+  }
+  .hero-crumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    font-family: var(--font-heading);
+    margin-bottom: 18px;
+  }
+  .hero-crumb span {
+    color: #5dcaa5;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-action-orange);
+    margin-bottom: 10px;
+  }
+  .hero-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    line-height: 1.75;
+    max-width: 440px;
+    margin-bottom: 28px;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+  }
+  .hero-logo {
+    flex-shrink: 0;
+    opacity: 0.88;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-stats {
+    display: flex;
+    margin-top: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+  }
+  .stat {
+    flex: 1;
+    padding: 18px 16px;
+    text-align: center;
+    border-right: 2px solid rgba(255, 255, 255, 0.12);
+  }
+  .stat:last-child {
+    border-right: none;
+  }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-action-orange);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+  }
+
+  /* ── Ghost button (hero/cta dark backgrounds) ── */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    padding: 10px 20px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-ghost:hover {
+    border-color: #fff;
+  }
+
+  /* ── Mission ── */
+  .mission {
+    background: #fff;
+    padding: 44px 48px;
+    border-bottom: 2px solid var(--color-stealth-gray);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .section-kicker {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-tactical-teal);
+    margin-bottom: 8px;
+  }
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-cadet-blue);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .body-copy {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #333;
+  }
+  .body-copy p {
+    margin-bottom: 12px;
+  }
+  .body-copy p:last-child {
+    margin-bottom: 0;
+  }
+  .pull-quote {
+    border-left: 4px solid var(--color-action-orange);
+    padding: 16px 20px;
+    background: #f4f4f4;
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--color-cadet-blue);
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .pull-quote cite {
+    display: block;
+    font-size: 11px;
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 700;
+    color: var(--color-tactical-teal);
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Features ── */
+  .features {
+    background: #f4f4f4;
+    padding: 44px 48px;
+    border-bottom: 2px solid var(--color-stealth-gray);
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 24px;
+    border: 2px solid var(--color-stealth-gray);
+  }
+  .feat {
+    background: #fff;
+    padding: 24px;
+  }
+  .feat-num {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--color-stealth-gray);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .feat-title {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-cadet-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .feat-desc {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.65;
+  }
+  .feat-badge {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    font-family: var(--font-heading);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge-teal {
+    background: #e0f2f1;
+    color: #085041;
+  }
+  .badge-orange {
+    background: #fff0e8;
+    color: #712b13;
+  }
+  .badge-blue {
+    background: #e3f0fb;
+    color: #0c447c;
+  }
+  .feat-bl {
+    border-left: 2px solid var(--color-stealth-gray);
+  }
+  .feat-bt {
+    border-top: 2px solid var(--color-stealth-gray);
+  }
+
+  /* ── Tech stack ── */
+  .tech-section {
+    background: #fff;
+    padding: 44px 48px;
+    border-bottom: 2px solid var(--color-stealth-gray);
+  }
+  .col-head {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-tactical-teal);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-action-orange);
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .tech-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .tech-pill {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border: 2px solid var(--color-stealth-gray);
+    color: #333;
+    font-family: var(--font-heading);
+    letter-spacing: 0.03em;
+    background: #f4f4f4;
+  }
+  .detail-note {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    border-left: 2px solid var(--color-stealth-gray);
+    padding-left: 12px;
+  }
+
+  /* ── CTA band ── */
+  .cta-band {
+    background: var(--color-tactical-teal);
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-top: 2px solid var(--color-cadet-blue);
+  }
+  .cta-text-head {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .cta-text-sub {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .cta-btns {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .cp-footer {
+    background: #002236;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid var(--color-cadet-blue);
+  }
+  .footer-text {
+    color: #3a6070;
+    font-size: 12px;
+  }
+  .footer-logo {
+    color: #5dcaa5;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 }

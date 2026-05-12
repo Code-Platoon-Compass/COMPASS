@@ -1,26 +1,143 @@
-import logo from '../assets/compass_logo.svg';
+import { useNavigate } from 'react-router-dom';
+import compassLogo from '../assets/COMPASS.svg';
+import navLogo from '../assets/compass_logo.svg';
 
+const TECH_STACK = ['React', 'Django', 'Python', 'Gemini API', 'Google SSO', 'PostgreSQL', 'Redis', 'Docker', 'Tailwind CSS'];
 
 const HomePage = () => {
+  const navigate = useNavigate();
 
-    return (
-        <>
-            <section className="hero">
-                <div className="hero-content">
-                    <img src={logo} alt="COMPASS logo" className="mx-auto mb-8 w-75 max-w-md" />
-                    <h1 className="hero-title">Welcome to COMPASS</h1>
-                    <p className="hero-description">Your all-in-one tool for navigating the Code Platoon curriculum and community.</p>
-                </div>
-                <div className="start-btn">
-                    <button className="btn-primary" onClick={() => window.location.href = '/auth'}>Get Started</button>
-                </div>
-            </section>
-            <h1>hi i'm the homepage</h1>
-            
-            
-            
-        </>
-    );
-}
+  return (
+    <>
+      {/* NAV */}
+      <nav className="cp-nav">
+        <div className="nav-logo">
+          <img src={navLogo} alt="COMPASS logo" width="50" height="50" />
+          <div>
+            <div className="nav-logo-text">COMPASS</div>
+            <div className="nav-logo-sub">Code Platoon Hub</div>
+          </div>
+        </div>
+        <div className="nav-right">
+          <button className="btn-primary" onClick={() => navigate('/auth')}>Get Started</button>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <div className="hero">
+        <div className="hero-inner">
+          <div className="hero-left">
+            <div className="hero-crumb">
+              &#8962; Home &rsaquo; <span>About</span>
+            </div>
+            <div className="hero-eyebrow">Code Platoon &middot; Student Resource Hub</div>
+            <h1 className="hero-title">About <em>COMPASS</em></h1>
+            <p className="hero-desc">
+              COMPASS is a student-built hub designed to give every Code Platoon cohort a single,
+              reliable place to find what they need &mdash; from curriculum links to live AI-powered
+              tools that make the learning experience smoother.
+            </p>
+            <div className="hero-btns">
+              <button className="btn-primary" onClick={() => navigate('/auth')}>&#8594; Explore resources</button>
+             
+            </div>
+            <div className="hero-stats">
+              <div className="stat">
+                <div className="stat-val">6+</div>
+                <div className="stat-label">Resources</div>
+              </div>
+              <div className="stat">
+                <div className="stat-val">AI</div>
+                <div className="stat-label">Vocab engine</div>
+              </div>
+              <div className="stat">
+                <div className="stat-val">24/7</div>
+                <div className="stat-label">Always on</div>
+              </div>
+            </div>
+          </div>
+          <div className="hero-logo">
+            <img src={compassLogo} alt="COMPASS logo" width="320" height="320" />
+          </div>
+        </div>
+      </div>
+
+      {/* MISSION */}
+      <div className="mission">
+        <div>
+          <div className="section-kicker">Our mission</div>
+          <h2 className="section-heading">One hub. Every resource. Zero hunting.</h2>
+          <div className="body-copy">
+            <p>Code Platoon students move fast &mdash; learning copous amounts of material in intensive phases in a matter of months. COMPASS exists so that no one loses time digging through bookmarks, Slack archives, or browser history to find what they need.</p>
+            <p>Built by students, for students &mdash; this app is itself a portfolio piece demonstrating the full-stack skills taught in the program.</p>
+          </div>
+        </div>
+        <div>
+          <div className="pull-quote">
+            &ldquo;Navigate with confidence. COMPASS points every student to the resources, tools, and community they need to succeed at Code Platoon &mdash; and beyond.&rdquo;
+            <cite>&mdash; COMPASS, student-built resource hub</cite>
+          </div>
+        </div>
+      </div>
+
+      {/* FEATURES */}
+      <div className="features">
+        <div className="section-kicker">What COMPASS does</div>
+        <h2 className="section-heading">Three tools, one destination</h2>
+        <div className="features-grid">
+          <div className="feat">
+            <div className="feat-num">01</div>
+            <div className="feat-title">Centralized curriculum resource access</div>
+            <div className="feat-desc"> Tied to your cohort and linked from one place with context on what each cohort covers.</div>
+            <span className="feat-badge badge-teal">Curriculum</span>
+          </div>
+          <div className="feat feat-bl">
+            <div className="feat-num">02</div>
+            <div className="feat-title">Live Chicago time clock</div>
+            <div className="feat-desc">Code Platoon runs on Chicago time. COMPASS shows a live CDT/CST clock so students in any time zone never miss a session or deadline.</div>
+            <span className="feat-badge badge-orange">Live tool</span>
+          </div>
+          <div className="feat feat-bt" style={{ gridColumn: '1 / -1' }}>
+            <div className="feat-num">03</div>
+            <div className="feat-title">AI vocabulary widget</div>
+            <div className="feat-desc">Paste any curriculum URL and get a list of related developer vocabulary terms &mdash; definitions and context generated by AI, tailored to that page&apos;s topic.</div>
+            <span className="feat-badge badge-blue">AI-powered</span>
+          </div>
+        </div>
+      </div>
+
+      {/* TECH STACK */}
+      <div className="tech-section">
+        <div className="col-head">Tech stack</div>
+        <div className="tech-wrap">
+          {TECH_STACK.map(t => (
+            <span key={t} className="tech-pill">{t}</span>
+          ))}
+        </div>
+        <div className="detail-note">Built with the same stack taught in the curriculum &mdash; COMPASS is a living portfolio piece demonstrating everything learned across all four phases.</div>
+      </div>
+
+      {/* CTA BAND */}
+      <div className="cta-band">
+        <div>
+          <div className="cta-text-head">Ready to navigate?</div>
+          <div className="cta-text-sub">Head back to the hub and find what you need.</div>
+        </div>
+        <div className="cta-btns">
+          <button className="btn-primary" onClick={() => navigate('/auth')}>&#8962; Get Started</button>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <div className="cp-footer">
+        <div className="footer-text">COMPASS &middot; Code Platoon Student Hub &middot; Built by cohort</div>
+        <div className="footer-logo">
+          <img src={compassLogo} alt="COMPASS logo" width="32" height="32" />
+          COMPASS
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default HomePage;
