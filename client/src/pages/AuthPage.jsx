@@ -1,9 +1,10 @@
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import LogoutButton from '../components/LogoutButton';
 
 export default function AuthPage() {
     const { user, setUser, authLoading } = useOutletContext();
+    const navigate = useNavigate();
 
     if (authLoading) {
         return (
@@ -13,6 +14,10 @@ export default function AuthPage() {
                 </div>
             </section>
         );
+    }
+
+    if (user) {
+        navigate('/dashboard');
     }
 
     return (
