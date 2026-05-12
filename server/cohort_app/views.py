@@ -9,6 +9,33 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from secrets import token_urlsafe
 
 # Create your views here.
+'''
+format request body:
+{
+    "name": "cool_cohort3",
+    "resource_links": 
+    [{
+        "url": "http://hello.com",
+        "label": "hello"
+        }, 
+        {
+            "label": "cool",
+            "url": "http://cool.com"
+        }
+    ],
+    "daily_links": [{
+        "url": "http://hello.com",
+        "label": "hello"
+        }, 
+        {
+            "label": "cool",
+            "url": "http://cool.com"
+        }
+    ],
+    "student_emails": ["sal@sal.com", "steve@steve.com", "oscar@oscar.com"]
+}
+'''
+
 def auth_api_key(request):
     api_key = request.headers.get("X-Api-Key", "")
     return len(Instructor.objects.filter(api_key=api_key)) == 1
