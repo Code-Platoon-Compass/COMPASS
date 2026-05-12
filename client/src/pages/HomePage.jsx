@@ -26,6 +26,10 @@ const HomePage = () => {
             &ldquo;The function of good software is to make the complex appear to be simple&rdquo;
             <cite>&mdash; Grady Booch, Chief Scientist for Software Engineering at IBM Research</cite>
           </div>
+          <div className="pull-quote mt-10">
+            &ldquo;If you don't have a question for me , I've got a question for you!&rdquo;
+            <cite>&mdash; Fransico Avila, Code Platoon Instructor </cite>
+          </div>
         </div>
       </div>
 
