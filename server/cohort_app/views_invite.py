@@ -8,7 +8,6 @@ from rest_framework import status
 from .models import Cohort
 
 class CohortInviteLinkView(APIView):
-    authentication_classes = []
     permission_classes = []
 
     def get(self, request, cohort_id):
