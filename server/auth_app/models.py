@@ -14,8 +14,9 @@ class Student(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cohort = models.ForeignKey(Cohort, on_delete=models.SET_NULL, null=True)
     name = models.TextField()
-    email = models.EmailField(null=False, unique=True)
+    email = models.EmailField(null=False, unique=True, default="test@example.com")
     google_id = models.TextField(unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'students'
