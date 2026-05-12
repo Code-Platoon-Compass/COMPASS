@@ -42,7 +42,7 @@ AUTH_USER_MODEL = 'auth_app.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        "auth_app.authentication.APIKeyAuthentication",
+        # "auth_app.authentication.APIKeyAuthentication",
         'auth_app.utilities.CookieAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (

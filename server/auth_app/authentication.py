@@ -2,6 +2,7 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from instructor_app.models import Instructor
 
+
 class APIKeyAuthentication(BaseAuthentication):
     def authenticate(self, request):
         api_key = request.headers.get("X-API-Key")

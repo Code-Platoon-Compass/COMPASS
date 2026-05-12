@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from cohort_app.models import Cohort, ValidEmail
 
-
+# python manage.py seed_auth_smoke_data --email 2017eerickson@gmail.com
 class Command(BaseCommand):
     help = "Seed a cohort invite code and allowlisted email for auth smoke tests."
 
