@@ -17,12 +17,12 @@ def auth_api_key(request):
 def multiple_resource_links_data(request, cohort_id:str):
     try:
         validresource_data = []
-        for resource, label in zip(request.data['resource_url'], request.data['resource_label']):
+        for resource_dict in request.data['resource_links']:
             # only adds new resource urls (combines lists)
-            if len(ResourceLink.objects.filter(cohort_id=cohort_id, url=resource)) == 0:
+            if len(ResourceLink.objects.filter(cohort_id=cohort_id, url=resource_dict['url'])) == 0:
                 validresource_data.append({
-                    "url": resource,
-                    "label": label,
+                    "url": resource_dict['url'],
+                    "label": resource_dict['label'],
                     "cohort": cohort_id})
         return validresource_data
     except:
@@ -32,12 +32,12 @@ def multiple_resource_links_data(request, cohort_id:str):
 def multiple_daily_links_data(request, cohort_id:str):
     try:
         valid_daily_data = []
-        for daily, label in zip(request.data['daily_url'], request.data['daily_label']):
+        for daily_dict in request.data['daily_links']:
             # only add new daily links (combines lists)
-            if len(DailyLink.objects.filter(cohort_id=cohort_id, url=daily)) == 0:
+            if len(DailyLink.objects.filter(cohort_id=cohort_id, url=daily_dict['url'])) == 0:
                 valid_daily_data.append({
-                    "url": daily,
-                    "label": label,
+                    "url": daily_dict['url'],
+                    "label": daily_dict['label'],
                     "cohort": cohort_id
                 })
         return valid_daily_data
@@ -47,8 +47,6 @@ def multiple_daily_links_data(request, cohort_id:str):
 # (request:Json request body, cohort_id:str) -> List[dict] for ValidEmail serializer
 def multiple_emails(request, cohort_id:str):
     try:
-        if 'email' not in request.data:
-            return []
         validemail_data = []
         for email in request.data['email']:
             # only adds new emails (combines lists)
