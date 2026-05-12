@@ -78,6 +78,7 @@ class CurrentUserView(APIView):
             {
                 'email': user.email,
                 'name': f"{user.first_name} {user.last_name}".strip(),
+                'cohort_id': user.student.cohort_id
             },
             status=s.HTTP_200_OK,
         )
@@ -196,6 +197,7 @@ class GoogleOAuthView(APIView):
                         cohort=cohort,
                         name=name or normalized_email,
                         email=normalized_email,
+                        user=user
                     )
 
             refresh = RefreshToken.for_user(user)
