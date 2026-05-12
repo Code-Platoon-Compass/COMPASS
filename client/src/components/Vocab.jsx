@@ -21,56 +21,57 @@ export default function Vocab() {
   }
 
   return (
-    <div className="flex items-center justify-center py-[2.5vmin] px-[1.5vmin] text-left">
-      <div className="bg-[#1e5a7a] rounded-3xl px-[3.5vmin] py-[3vmin] w-[90%] max-w-4xl">
+    <div className="px-6 py-4">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
 
-        <p className="text-[#fcf3f3] text-[2.5vmin] font-normal tracking-wide mb-[2vmin]">
-          VOCAB LOOKUP
-        </p>
-
-        <form onSubmit={handleSubmit} className="flex gap-[1vmin] mb-[0.8vmin]">
-          <input
-            type="text"
-            name="lecture_url"
-            placeholder="Please enter the link for the lesson you would like vocab for....."
-            className="bg-[#0f3147] border border-[#0f3147] text-white text-[1.8vmin] rounded-lg flex-1 px-[1.5vmin] py-[1vmin] placeholder-white/50 outline-none"
-          />
-          <button
-            type="submit"
-            className="bg-[#e7771e] border border-black text-white text-[2.1vmin] rounded-lg px-[2vmin] py-[0.8vmin] whitespace-nowrap"
-          >
-            Let's vocab!
-          </button>
-        </form>
-
-        <div className="flex items-stretch gap-[1vmin] mb-[1.5vmin]">
-          <div className="w-px bg-white/50 shrink-0" />
-          <p className="text-white text-[2vmin] py-[0.5vmin]">
-            A quick and easy way to get vocab for a lecture from the Code Platoon curriculum
-          </p>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <span className="text-[#e7771e] text-xs font-semibold tracking-widest uppercase">
+            Curriculum Vocab Generator
+          </span>
+          <span className="text-gray-400 text-xs">AI-powered · Paste a curriculum URL</span>
         </div>
 
-        <div className="bg-[#0f3147] rounded-lg h-[18vmin] overflow-y-auto">
-          {loading && (
-            <div className="h-full flex items-center justify-center">
-              <p className="text-[#bcacac] text-[2.5vmin]">Loading...</p>
-            </div>
-          )}
-          {!loading && vocabList && (
-            <ul className="divide-y divide-white/30 border border-white/30 rounded-lg">
-              {vocabList.map((item, index) => (
-                <li key={index} className="grid grid-cols-[22vmin_1fr] text-white text-[1.8vmin]">
-                  <span className="px-[1.5vmin] py-[1vmin] border-r border-white/30">{item.term}</span>
-                  <span className="px-[1.5vmin] py-[1vmin]">{item.definition}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          {!loading && !vocabList && (
-            <div className="h-full flex items-center justify-center">
-              <p className="text-[#c7b1b1] text-[1.9vmin]">enter lecture url..</p>
-            </div>
-          )}
+        {/* Input + Button */}
+        <div className="px-6 py-4">
+          <form onSubmit={handleSubmit} className="flex gap-3">
+            <input
+              type="text"
+              name="lecture_url"
+              placeholder="https://github.com/CodePlatoon/curriculum/..."
+              className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-gray-400"
+            />
+            <button
+              type="submit"
+              className="bg-[#e7771e] text-white text-sm font-semibold tracking-widest uppercase px-6 py-2 rounded-lg whitespace-nowrap hover:bg-[#d06a18]"
+            >
+              Generate
+            </button>
+          </form>
+        </div>
+
+        {/* Results area */}
+        <div className="px-6 pb-6">
+          <div className="border-l-4 border-[#e7771e] pl-4 h-[150px] overflow-y-auto flex items-start">
+            {loading && (
+              <p className="text-gray-400 text-sm italic mt-2">Loading...</p>
+            )}
+            {!loading && vocabList && (
+              <ul className="divide-y divide-gray-200 w-full">
+                {vocabList.map((item, index) => (
+                  <li key={index} className="grid grid-cols-[180px_1fr] text-sm py-2">
+                    <span className="font-medium text-gray-800 pr-4">{item.term}</span>
+                    <span className="text-gray-600">{item.definition}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {!loading && !vocabList && (
+              <p className="text-gray-400 text-sm italic mt-2">
+                Paste a curriculum URL above and click Generate to see relevant vocab terms.
+              </p>
+            )}
+          </div>
         </div>
 
       </div>
