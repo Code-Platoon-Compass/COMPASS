@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AllDailyLinksView, OneDailyLinkView, AllResourceLinksView, OneResourceLinkView, AllValidEmailsView, OneValidEmailView
+from .views import *
 
 urlpatterns = [
     path('<uuid:cohort_id>/daily-links/', AllDailyLinksView.as_view(), name='all-daily-links'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('<uuid:cohort_id>/resource-links/<uuid:link_id>/', OneResourceLinkView.as_view(), name='resource-link'),
     path('<uuid:cohort_id>/emails/', AllValidEmailsView.as_view(), name='all-valid-emails'),
     path('<uuid:cohort_id>/emails/<uuid:email_id>/', OneValidEmailView.as_view(), name='one-valid-email'),
+    path('', CohortView.as_view(), name='one-cohort')
 ]
