@@ -26,5 +26,6 @@ urlpatterns = [
     path('api/v1/vocab/', include('vocab_app.urls')), 
     path('api/v1/test', connection),
     path('api/v1/auth/', include('auth_app.urls')),
-    path('api/v1/cohorts/', include("cohort_app.urls")),
+    path('api/v1/cohorts/', include("cohort_app.urls")), 
+    path('api/v1/links/', include('links_app.urls')),
 ]

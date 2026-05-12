@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'cohort_app',
     'vocab_app',
     'auth_app'
+    'links_app'
 ]
 
 MIDDLEWARE = [
