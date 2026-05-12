@@ -35,11 +35,17 @@ export default function CheckIn({ url }) {
 
   return (
     <>
-      <header>Daily Check-in Form</header>
       <a
         style={{
           pointerEvents: isFormEnabled ? "" : "none",
           textDecoration: isFormEnabled ? "" : "none",
+          backgroundColor: isFormEnabled ? "ff600d" : "#3b7f82",
+          color : isFormEnabled ? "white" : "#cbd5e1",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.375rem",
+          fontWeight: "500",
+          fontSize: "0.875rem",
+          transition: "background-color 0.3s, color 0.3s",
         }}
         tabIndex={isFormEnabled ? undefined : -1}
         href={url}
