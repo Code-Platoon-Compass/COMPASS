@@ -12,19 +12,19 @@ urlpatterns = [
 
     # Daily links
     path(
-        '<uuid:cohort_id>/daily-links/',
+        '<uuid:cohort_id>/daily-link/',
         AllDailyLinksView.as_view(),
         name='all-daily-links'
     ),
     path(
-        '<uuid:cohort_id>/daily-links/<uuid:link_id>/',
+        '<uuid:cohort_id>/daily-link/<uuid:link_id>/',
         OneDailyLinkView.as_view(),
         name='daily-link'
     ),
 
     # Resource links
     path(
-        '<uuid:cohort_id>/resource-links/',
+        '<uuid:cohort_id>/resource-link/',
         AllResourceLinksView.as_view(),
         name='all-resource-links'
     ),

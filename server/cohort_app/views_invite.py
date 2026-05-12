@@ -7,7 +7,6 @@ from rest_framework import status
 
 from .models import Cohort
 
-
 class CohortInviteLinkView(APIView):
     permission_classes = [IsAuthenticated]
 

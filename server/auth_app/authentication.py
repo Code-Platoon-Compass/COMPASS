@@ -1,7 +1,6 @@
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from auth_app.models import Instructor
-
+from instructor_app.models import Instructor
 
 class APIKeyAuthentication(BaseAuthentication):
     def authenticate(self, request):
