@@ -12,8 +12,15 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 from dotenv import load_dotenv
 load_dotenv()
+
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+
+JWT_ACCESS_COOKIE = 'access_token'
+JWT_REFRESH_COOKIE = 'refresh_token'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,14 +29,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
+AUTH_USER_MODEL = 'auth_app.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        "auth_app.authentication.APIKeyAuthentication",
+        'auth_app.utilities.CookieAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 # Application definition
 
@@ -40,10 +59,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'cohort_app',
     'vocab_app',
     'auth_app',
+    'instructor_app',
 ]
+
+
+COMPASS_INVITE_BASE_URL = "https://compass.codeplatoon.org/join"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,10 +110,21 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': 'compass-postgres-container',
-        'PORT': '5432',
+        'HOST': os.getenv('POSTGRES_HOST') or os.getenv('DB_HOST') or 'db',
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+
+CACHES = {
+            "default":{
+                'BACKEND':'django_redis.cache.RedisCache',
+                'LOCATION':os.environ.get('REDIS_URL'),
+                'OPTIONS':{
+                    'CLIENT_CLASS' : 'django_redis.client.DefaultClient'
+                }
+            }
+        }
+
 
 
 # Password validation
@@ -126,4 +163,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Disable Redis during tests
+if 'test' in sys.argv:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "test-cache"
+        }
+    }
 

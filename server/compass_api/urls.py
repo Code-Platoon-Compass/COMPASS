@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.http import JsonResponse
+
+def connection(request):
+    return JsonResponse({"connected": True})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/vocab/', include('vocab_app.urls')), 
+    path('api/v1/test', connection),
+    path('api/v1/auth/', include('auth_app.urls')),
+    path('api/v1/cohorts/', include("cohort_app.urls")),
+    path('api/v1/auth/', include("auth_app.urls")),
+    path('api/v1/instructor/', include("instructor_app.urls"))
 ]
