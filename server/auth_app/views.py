@@ -213,4 +213,3 @@ class GoogleOAuthView(APIView):
         except ValueError as e:
             logger.exception('Google token verification failed: %s', str(e))
             return Response({'error': 'Invalid token'}, status=s.HTTP_400_BAD_REQUEST)
-
