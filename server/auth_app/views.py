@@ -15,6 +15,7 @@ from .models import Student
 from rest_framework.permissions import IsAuthenticated
 
 logger = logging.getLogger(__name__)
+# Allow a small clock skew when verifying Google tokens to account for any minor time differences between the server and Google's token issuance time.
 GOOGLE_TOKEN_CLOCK_SKEW_SECONDS = 10
 
 def generate_cookie_time(days=0, minutes=22):
@@ -83,16 +84,6 @@ class CurrentUserView(APIView):
             status=s.HTTP_200_OK,
         )
 
-class CreateUserView(APIView):
-    authentication_classes = []
-    permission_classes = []
-    pass
-
-class LoginView(APIView):
-    authentication_classes = []
-    permission_classes = []
-    pass
-
 class LogoutView(APIView):
     authentication_classes = []
     permission_classes = []
@@ -158,7 +149,7 @@ class GoogleOAuthView(APIView):
 
             User = get_user_model()
 
-            # Create account only after Google verification and allowlist checks pass.
+            # Create account only after Google verification and allowlist checks pass. Uses a transaction to ensure we don't end up with a User without a corresponding Student or vice versa. Also updates the user's name and email if they have changed since the last login.
             with transaction.atomic():
                 user, created = User.objects.get_or_create(
                     email=normalized_email,
@@ -176,7 +167,7 @@ class GoogleOAuthView(APIView):
                         user.first_name = first_name
                         user.last_name = last_name
                         user.save(update_fields=['first_name', 'last_name'])
-
+                # If user exists update their account to link to google if not already, update info if changed. Creates a Student record if no user is found.
                 if existing_student:
                     student_updates = []
 
@@ -199,11 +190,12 @@ class GoogleOAuthView(APIView):
                         email=normalized_email,
                         user=user
                     )
-
+            # Generate JWT tokens and set them in HttpOnly cookies
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
-
+            
+            # Include user info in the response body for convenience, even though the client can get this from the CurrentUserView endpoint after login. This avoids an extra round trip to fetch user info immediately after login.
             response_data = {
                 'email': user.email,
                 'name': f"{user.first_name} {user.last_name}".strip(),

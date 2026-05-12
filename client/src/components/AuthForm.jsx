@@ -8,6 +8,7 @@ const AuthForm = ({setUser}) => {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
+    // When the user successfully logs in with Google, this function will be called with the credential response. Token and invite code are retrieved and sent to the backend for final verification.
     const handleGoogleLoginSuccess = async (credentialResponse) => {
         const token = credentialResponse.credential;
         const result = await handleGoogleAuth(token, inviteCode);
@@ -22,12 +23,14 @@ const AuthForm = ({setUser}) => {
         setErrorMessage(result.error);
     }
 
+    // In case users need to switch accounts, this will take them to Google's account chooser page in a new tab. Created as backup in case the auto_select={false} prop on the GoogleLogin component doesn't work as expected for some users.
     const openGoogleAccountChooser = () => {
         window.open('https://accounts.google.com/AccountChooser', '_blank', 'noopener,noreferrer');
     }
 
     return (
         <div className="auth-form">
+            {/* invite code block */}
             <div className="form-block">
                 <label className="form-label" htmlFor="invite-code">Invite code (first sign in only)</label>
                 <input
@@ -46,7 +49,7 @@ const AuthForm = ({setUser}) => {
             </div>
 
             {errorMessage ? <p className="error-text">{errorMessage}</p> : null}
-
+            {/* Google login button */}
             <div className="google-wrap">
                 <GoogleLogin
                     auto_select={false}
@@ -57,7 +60,7 @@ const AuthForm = ({setUser}) => {
                     }}
                 />
             </div>
-
+            {/* backup account chooser button */}
             <button
                 className="btn-secondary"
                 type="button"

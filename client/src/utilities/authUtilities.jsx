@@ -10,6 +10,7 @@ export const test_connection = async() =>{
 		    console.log(response)
 		  }
 
+// Google authentication helper function. Takes the token from the Google login response and the invite code (if it's the user's first time logging in) and sends them to the backend for verification.     
 export const handleGoogleAuth = async (token, inviteCode) => {
     try {
         const payload = { token };
@@ -33,7 +34,7 @@ export const handleGoogleAuth = async (token, inviteCode) => {
         };
     }
 }
-
+// Logout helper function. Called when the user clicks the logout button. It sends a request to the backend to clear the user's session cookie.
 export const handleLogout = async () => {
     try {
         let response = await api.post("auth/logout/");
@@ -49,7 +50,7 @@ export const handleLogout = async () => {
         };
     }
 }
-
+// Session restoration helper function. Called when the app first loads to check if the user has an active session. It attempts to mint a new access token using the refresh token cookie, then grabs user info. 
 export const restoreSession = async () => {
     try {
         // Step 1: use refresh cookie to mint a new access token cookie.
@@ -69,51 +70,7 @@ export const restoreSession = async () => {
         };
     }
 }
-// export const logout = async()=>{
-//     let token = localStorage.getItem("token")
-//     api.defaults.headers.common['Authorization'] = `Token ${token}`
-//     let response = await api.post("users/logout/")
-//     localStorage.removeItem("token");
 
-//     if (response.status == 200){
-//         console.log('logged out ')
-//         return null
-//     }
-//     else{
-//         return console.errors(response.errors)
-//     }
-// }
-
-// export const userConfirmation = async() => {
-//     let token = localStorage.getItem("token") // 'str' | null
-//     if (token){
-//         api.defaults.headers.common['Authorization'] = `Token ${token}`
-//         let response = await api.get('users/')
-//         if (response.status === 200){
-//             let user = response.data.email
-//             console.log("user confirmed")
-//             return user
-//         }
-//         console.error(response.data)
-//         return null
-//     }
-//     return null
-// }
-
-// export const handleUserAuth = async (data, create) => {
-//   let response = await api.post(create ? "users/create/" : "users/login/",
-//     data
-//   );
-//   if (response.status === 201 || response.status === 200) {
-//     let token = response.data.token;
-//     // Store the token securely (e.g., in localStorage or HttpOnly cookies)
-//     localStorage.setItem("token", token);
-//     api.defaults.headers.common["Authorization"] = `Token ${token}`;
-//     return response.data.email;
-//   }
-//   alert(response.data);
-//   return null;
-// };
 
 
 
