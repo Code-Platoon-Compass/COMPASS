@@ -30,7 +30,7 @@ export default function AuthPage() {
                     </div>
                 ) : null}
 
-                <AuthForm setUser={setUser} />
+                {!user ? <AuthForm setUser={setUser} /> : null}
             </div>
         </section>
     )
