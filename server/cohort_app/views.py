@@ -18,12 +18,9 @@ def auth_api_key(request):
 class AllDailyLinksView(APIView):
     
     def get(self, request, cohort_id):
-        if auth_api_key(request):
-            links = get_list_or_404(DailyLink, cohort_id=cohort_id)
-            serialized_links = DailyLinkSerializer(links, many=True)
-            return Response(serialized_links.data, status=s.HTTP_200_OK)
-        else:
-            return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)
+        links = get_list_or_404(DailyLink, cohort_id=cohort_id)
+        serialized_links = DailyLinkSerializer(links, many=True)
+        return Response(serialized_links.data, status=s.HTTP_200_OK)
     
     def post(self, request, cohort_id):
         if auth_api_key(request):
@@ -69,12 +66,9 @@ class OneDailyLinkView(APIView):
 class AllResourceLinksView(APIView):
     
     def get(self, request, cohort_id):
-        if auth_api_key(request):
-            links = get_list_or_404(ResourceLink, cohort_id=cohort_id)
-            serialized_links = ResourceLinkSerializer(links, many=True)
-            return Response(serialized_links.data, status=s.HTTP_200_OK)
-        else:
-            return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)
+        links = get_list_or_404(ResourceLink, cohort_id=cohort_id)
+        serialized_links = ResourceLinkSerializer(links, many=True)
+        return Response(serialized_links.data, status=s.HTTP_200_OK)
         
     def post(self, request, cohort_id):
         if auth_api_key(request):
