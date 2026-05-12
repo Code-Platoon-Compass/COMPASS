@@ -14,10 +14,11 @@ export default function Hero() {
                 <div className="hero-eyebrow">Code Platoon &middot; Student Resource Hub</div>
                 <h1 className="hero-title">About <em>COMPASS</em></h1>
                 <p className="hero-desc">
-                  COMPASS is a student-built hub designed to give every Code Platoon cohort a single,
-                  reliable place to find what they need &mdash; from curriculum links to live AI-powered
-                  tools that make the learning experience smoother.
-                </p>
+                  COMPASS is a student-built hub designed to give every Code Platoon cohort a single, reliable place to find what you need. Combining everything from curriculum links to live AI-powered tools, so you can spend less time hunting and more time learning . 
+                  </p>
+                  <p className="hero-desc">
+                    <strong>Built by students, for students:</strong> this app demonstrates the full-stack skills taught in the program so you can learn them faster than we did.
+                  </p>
                 <div className="hero-btns">
                   <button className="btn-primary" onClick={() => navigate('/auth')}>&#8594; Explore resources</button>
                  
