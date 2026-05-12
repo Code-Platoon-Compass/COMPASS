@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import compassLogo from '../assets/COMPASS.svg';
-import navLogo from '../assets/compass_logo.svg';
+import Nav from '../components/Nav';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
 
 const TECH_STACK = ['React', 'Django', 'Python', 'Gemini API', 'Google SSO', 'PostgreSQL', 'Redis', 'Docker', 'Tailwind CSS'];
 
@@ -9,73 +10,21 @@ const HomePage = () => {
 
   return (
     <>
-      {/* NAV */}
-      <nav className="cp-nav">
-        <div className="nav-logo">
-          <img src={navLogo} alt="COMPASS logo" width="50" height="50" />
-          <div>
-            <div className="nav-logo-text">COMPASS</div>
-            <div className="nav-logo-sub">Code Platoon Hub</div>
-          </div>
-        </div>
-        <div className="nav-right">
-          <button className="btn-primary" onClick={() => navigate('/auth')}>Get Started</button>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <div className="hero">
-        <div className="hero-inner">
-          <div className="hero-left">
-            <div className="hero-crumb">
-              &#8962; Home &rsaquo; <span>About</span>
-            </div>
-            <div className="hero-eyebrow">Code Platoon &middot; Student Resource Hub</div>
-            <h1 className="hero-title">About <em>COMPASS</em></h1>
-            <p className="hero-desc">
-              COMPASS is a student-built hub designed to give every Code Platoon cohort a single,
-              reliable place to find what they need &mdash; from curriculum links to live AI-powered
-              tools that make the learning experience smoother.
-            </p>
-            <div className="hero-btns">
-              <button className="btn-primary" onClick={() => navigate('/auth')}>&#8594; Explore resources</button>
-             
-            </div>
-            <div className="hero-stats">
-              <div className="stat">
-                <div className="stat-val">6+</div>
-                <div className="stat-label">Resources</div>
-              </div>
-              <div className="stat">
-                <div className="stat-val">AI</div>
-                <div className="stat-label">Vocab engine</div>
-              </div>
-              <div className="stat">
-                <div className="stat-val">24/7</div>
-                <div className="stat-label">Always on</div>
-              </div>
-            </div>
-          </div>
-          <div className="hero-logo">
-            <img src={compassLogo} alt="COMPASS logo" width="320" height="320" />
-          </div>
-        </div>
-      </div>
-
+      <Nav/>
+      <Hero/>
       {/* MISSION */}
       <div className="mission">
         <div>
           <div className="section-kicker">Our mission</div>
           <h2 className="section-heading">One hub. Every resource. Zero hunting.</h2>
           <div className="body-copy">
-            <p>Code Platoon students move fast &mdash; learning copous amounts of material in intensive phases in a matter of months. COMPASS exists so that no one loses time digging through bookmarks, Slack archives, or browser history to find what they need.</p>
-            <p>Built by students, for students &mdash; this app is itself a portfolio piece demonstrating the full-stack skills taught in the program.</p>
+            <p>Code Platoon moves fast, we’re talking drinking from a firehose speeds. You don’t have the time or mental bandwidth to search through the gigantic pile of resources dumped at your feet in the first few days. As former students, we know how much those resources matter and how buried they get. That’s why we made COMPASS. So no future student loses time digging through bookmarks, Slack pins, and browser history to find what they need. Learning to code is hard. Finding the Zoom link shouldn’t be.</p>
           </div>
         </div>
         <div>
           <div className="pull-quote">
-            &ldquo;Navigate with confidence. COMPASS points every student to the resources, tools, and community they need to succeed at Code Platoon &mdash; and beyond.&rdquo;
-            <cite>&mdash; COMPASS, student-built resource hub</cite>
+            &ldquo;The function of good software is to make the complex appear to be simple&rdquo;
+            <cite>&mdash; Grady Booch, Chief Scientist for Software Engineering at IBM Research</cite>
           </div>
         </div>
       </div>
@@ -94,14 +43,20 @@ const HomePage = () => {
           <div className="feat feat-bl">
             <div className="feat-num">02</div>
             <div className="feat-title">Live Chicago time clock</div>
-            <div className="feat-desc">Code Platoon runs on Chicago time. COMPASS shows a live CDT/CST clock so students in any time zone never miss a session or deadline.</div>
+            <div className="feat-desc">Code Platoon is based in Chicago and uses Chicago time. COMPASS shows a live CDT/CST clock so students in any time zone never miss a session or deadline.</div>
             <span className="feat-badge badge-orange">Live tool</span>
           </div>
-          <div className="feat feat-bt" style={{ gridColumn: '1 / -1' }}>
+          <div className="feat feat-bt"> 
             <div className="feat-num">03</div>
             <div className="feat-title">AI vocabulary widget</div>
-            <div className="feat-desc">Paste any curriculum URL and get a list of related developer vocabulary terms &mdash; definitions and context generated by AI, tailored to that page&apos;s topic.</div>
+            <div className="feat-desc">Paste any curriculum URL and get a list of related vocabulary words &mdash; definitions and context generated by AI and based off the topic you need right now.</div>
             <span className="feat-badge badge-blue">AI-powered</span>
+          </div>
+          <div className="feat feat-bt"> 
+            <div className="feat-num">04</div>
+            <div className="feat-title">All-in-one Link Hub</div>
+            <div className="feat-desc">Two widgets = Major power. All the links you need, centralized in one hub for easy access.</div>
+            <span className="feat-badge badge-yellow">Link Hub</span>
           </div>
         </div>
       </div>
@@ -128,14 +83,8 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <div className="cp-footer">
-        <div className="footer-text">COMPASS &middot; Code Platoon Student Hub &middot; Built by cohort</div>
-        <div className="footer-logo">
-          <img src={compassLogo} alt="COMPASS logo" width="32" height="32" />
-          COMPASS
-        </div>
-      </div>
+      <Footer/>
+      
     </>
   );
 };

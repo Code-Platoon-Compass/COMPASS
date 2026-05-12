@@ -436,6 +436,10 @@
     background: #e3f0fb;
     color: #0c447c;
   }
+  .badge-yellow {
+    background: #fff9e6;
+    color: #7a5a00;
+  }
   .feat-bl {
     border-left: 2px solid var(--color-stealth-gray);
   }
