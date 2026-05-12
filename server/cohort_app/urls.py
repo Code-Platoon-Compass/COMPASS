@@ -1,12 +1,5 @@
 from django.urls import path
-from .views import (
-    AllDailyLinksView,
-    OneDailyLinkView,
-    AllResourceLinksView,
-    OneResourceLinkView,
-    AllValidEmailsView,
-    OneValidEmailView,
-)
+from .views import *
 from .views_invite import CohortInviteLinkView
 
 urlpatterns = [
@@ -52,4 +45,5 @@ urlpatterns = [
         OneValidEmailView.as_view(),
         name='one-valid-email'
     ),
+    path('', CohortView.as_view(), name='one-cohort')
 ]
