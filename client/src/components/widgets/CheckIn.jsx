@@ -39,8 +39,8 @@ export default function CheckIn({ url }) {
         style={{
           pointerEvents: isFormEnabled ? "" : "none",
           textDecoration: isFormEnabled ? "" : "none",
-          backgroundColor: isFormEnabled ? "ff600d" : "#3b7f82",
-          color : isFormEnabled ? "white" : "#cbd5e1",
+          backgroundColor: isFormEnabled ? "#ff600d" : "#3b7f82",
+          color : isFormEnabled ? "white" : "white",
           padding: "0.5rem 1rem",
           borderRadius: "0.375rem",
           fontWeight: "500",
