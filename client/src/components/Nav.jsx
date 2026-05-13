@@ -8,7 +8,7 @@ export default function Nav() {
     const { user } = useOutletContext();
 
   return (
-    <div> {/* NAV */}
+    <div className="sticky top-0 z-50"> {/* NAV */}
           <nav className="cp-nav">
             <div className="nav-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
               <img src={miniLogo} alt="COMPASS logo" width="50" height="50" />
