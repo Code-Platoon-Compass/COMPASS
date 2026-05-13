@@ -32,7 +32,7 @@ format request body:
             "url": "http://cool.com"
         }
     ],
-    "student_emails": ["sal@sal.com", "steve@steve.com", "oscar@oscar.com"]
+    "email": ["sal@sal.com", "steve@steve.com", "oscar@oscar.com"]
 }
 '''
 
