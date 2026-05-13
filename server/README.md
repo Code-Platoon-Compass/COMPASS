@@ -1,54 +1,212 @@
-# About the Endpoints
+# About the Instructor Endpoints
 
-The bulk of endpoints are for instructors to edit the resources that are available for students. The document should help a new user find endpoints and ping them to update materials.
+The reference is to help instructors who are editing course material using the endpoints. Every instructor gets an API key to use endpoints that require authentication.
 
-## Instructors
+## Seeding Database
 
-The instructors are the only ones authorized to access most POST, PUT, and DELETE endpoints, aside from student authentication and AI-generated vocabulary lists. At database setup, a main instructor is created by default with an API key. Using the API key, more instructors can be generated. Then instructors can add, edit, and remove resources for students.
+1. Run migrations from the web server container (Django) to PostgreSQL container
+2. Go to the seed_db folder in the PostgreSQL container
+3. Either run seed.sh or run `psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f init_instructors.sql`
 
-### Create instructors
+## Instructor
 
-POST api/v1/instructor/create
+| Method | Endpoint | Authentication | Description |
+|---|---|---|---|
+| `POST` | `/instructors` | API Key | Create a new instructor account (requires master instructor API key) |
 
+Sample JSON body for POST:
+```
+{
+    "name": "instructor_name",
+    "email": "instructor_email"
+}
+```
 
+## Cohorts
 
-POST api/v1/instructor/forgot
+| Method | Endpoint | Authentication | Description |
+|---|---|---|---|
+| `POST` | `/cohorts` | API Key | Create a new cohort |
+| `GET` | `/cohorts/:cohort-id/invite` | None | Retrieve the cohort invite code |
 
-### Create Cohort
+For the JSON body, all lists should stay as lists, even if there is only one element in the list.
 
-POST api/v1/cohorts
+### Sample JSON body for POST
 
-### Daily Links
+```
+Just a cohort, no links or emails
+{
+    "name": "sample_cohort"
+}
 
-GET api/v1/cohorts/:cohort-id/daily-links/
-POST api/v1/cohorts/:cohort-id/daily-links/
-PUT api/v1/cohorts/:cohort-id/daily-links/:id
-DELETE api/v1/cohorts/:cohort-id/daily-links/:id
+Cohort with one daily link and one email
+{
+    "name": "sample_cohort",
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }
+    ],
+    "email": ["test@example.com"]
+}
 
-### Resource Links
+Cohort with only links
+{
+    "name": "sample_cohort",
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }
+    ],
+    "resource_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }
+    ]
+}
 
-GET api/v1/cohorts/:cohort-id/resource-links/
-POST api/v1/cohorts/:cohort-id/resource-links/
-PUT api/v1/cohorts/:cohort-id/resource-links/:id
-DELETE api/v1/cohorts/:cohort-id/resource-links/:id
+Sample JSON body adding all elements
+{
+    "name": "sample_cohort",
+    "resource_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }, 
+        {
+            "url": "http://cool.com",
+            "label": "cool"
+        }
+    ],
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }, 
+        {
+            "url": "http://cool.com",
+            "label": "cool"
+        }
+    ],
+    "email": ["test@example.com", "test2@example.com", "test3@example.com"]
+}
+```
 
-### Cohort Emails
+## Valid Emails
 
-GET api/v1/cohorts/:cohort-id/emails
-POST api/v1/cohorts/:cohort-id/emails
-PUT api/v1/cohorts/:cohort-id/emails/:id
-DELETE api/v1/cohorts/:cohort-id/emails/:id
+| Method | Endpoint | Authentication | Description |
+|---|---|---|---|
+| `GET` | `/cohorts/:cohort-id/emails` | API Key | List approved student emails |
+| `POST` | `/cohorts/:cohort-id/emails` | API Key | Add an approved email |
+| `PUT` | `/cohorts/:cohort-id/emails/:id` | API Key | Update an approved email |
+| `DELETE` | `/cohorts/:cohort-id/emails/:id` | API Key | Remove an approved email |
 
-### Invite Link
+For the JSON body, all lists should stay as lists, even for one element.
 
-GET api/v1/cohorts/:cohort-id/invite
+### Sample JSON body for POST or PUT
 
-## Student Authentication
+```
+One email:
+{
+    "email": ["test@example.com"]
+}
 
-POST api/v1/auth/create-student
-POST api/v1/auth/login
-POST api/v1/auth/logout
+Many emails:
+{
+    "email": ["test@example.com", "test2@example.com", "test3@example.com"]
+}
+```
 
-## Vocab
+## Daily Links
 
-POST api/v1/vocab
+| Method | Endpoint | Authentication | Description |
+|---|---|---|---|
+| `GET` | `/cohorts/:cohort-id/daily-links/` | None | List daily links for a cohort |
+| `POST` | `/cohorts/:cohort-id/daily-links/` | API Key | Add a list of daily links. Duplicate links are not added. |
+| `PUT` | `/cohorts/:cohort-id/daily-links/:id` | API Key | Update a daily link |
+| `DELETE` | `/cohorts/:cohort-id/daily-links/:id` | API Key | Remove a daily link |
+
+### Sample JSON body for POST or PUT
+
+```
+For one daily link:
+{
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }
+    ]
+}
+
+For many daily links:
+{
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }, 
+        {
+            "url": "http://cool.com",
+            "label": "cool"
+        },
+        {
+            "url": "https://great.com",
+            "label": "great"
+        }
+    ]
+}
+```
+
+## Resource Links
+
+| Method | Endpoint | Autentication | Description |
+|---|---|---|---|
+| `GET` | `/cohorts/:cohort-id/resource-links/` | None | List resource links for a cohort |
+| `POST` | `/cohorts/:cohort-id/resource-links/` | API Key | Add a list of resource links. Duplicate links are not added. |
+| `PUT` | `/cohorts/:cohort-id/resource-links/:id` | API Key | Update a resource link |
+| `DELETE` | `/cohorts/:cohort-id/resource-links/:id` | API Key | Remove a resource link |
+
+### Sample JSON body for POST or PUT
+
+```
+For one resource link:
+{
+    "resource_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }
+    ]
+}
+
+For many resource links:
+{
+    "resource_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
+        }, 
+        {
+            "url": "http://cool.com",
+            "label": "cool"
+        },
+        {
+            "url": "https://great.com",
+            "label": "great"
+        }
+    ]
+}
+```
