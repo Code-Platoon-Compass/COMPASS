@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'cohort_app',
-    #'vocab_app',
+    'vocab_app',
     'auth_app',
     'instructor_app',
 ]
