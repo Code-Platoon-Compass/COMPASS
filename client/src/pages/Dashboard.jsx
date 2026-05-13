@@ -1,6 +1,5 @@
 import CheckIn from "../components/widgets/CheckIn";
 import Vocab from "../components/Vocab";
-import TimezoneClock from '../components/TimezoneClock';
 import DailyLinks from "../components/widgets/DailyLinks";
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -33,9 +32,6 @@ export default function Dashboard() {
                             <span className="text-[#e7771e] italic">{firstName}.</span>
                         </h1>
                     )}
-                </div>
-                <div className="flex items-center gap-4">
-                    <TimezoneClock />
                 </div>
             </div>
 
