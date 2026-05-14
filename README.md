@@ -165,7 +165,7 @@ COMPASS/
    In the client folder:
    ```bash
    cd client
-   npm run install
+   npm install
    npm run build
    ```
 
