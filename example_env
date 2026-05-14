@@ -1,5 +1,5 @@
 # Django Settings
-DJANGO_KEY=
+SECRET_KEY=
 DEBUG=
 
 # Allowed origins
