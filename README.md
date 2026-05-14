@@ -178,7 +178,10 @@ COMPASS/
    4. Go to the database container
    5. Go to the seed_db folder
    6. Seed the database by runing the `./seed.sh` script
-   7. Copy the API key as this is used for instructor endpoints
+      ```bash
+      ./seed.sh
+      ```
+   8. Copy the API key as this is used for instructor endpoints
       
 5. **Access the app**
 
