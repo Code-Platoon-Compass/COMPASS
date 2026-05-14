@@ -271,7 +271,7 @@ The following features were scoped and designed but deferred to a future version
 |---|---|
 | [Name] | [@handle] |
 | [Name] | [@handle] |
-| [Name] | [@handle] |
+| [Ericka] | [@2017eerickson] |
 | [Name] | [@handle] |
 | [Name] | [@handle] |
 | [Name] | [@handle] |
