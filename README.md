@@ -181,8 +181,14 @@ COMPASS/
    1. Go to the server container with the Django web server
    2. Run migrations
       ```bash
-      python manage.py makemigrations
-      python manage.py migrate
+      python manage.py makemigrations cohort_app
+      python manage.py migrate cohort_app
+      python manage.py makemigrations auth_app
+      python manage.py migrate auth_app
+      python manage.py makemigrations instructor_app
+      python manage.py migrate instructor_app
+      python manage.py makemigrations vocab_app
+      python manage.py migrate vocab_app
       ```
    4. Go to the database container
    5. Go to the seed_db folder
