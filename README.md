@@ -297,4 +297,7 @@ The following features were scoped and designed but deferred to a future version
 
 ---
 
-*Built at Code Platoon.*
+**[COMPASS](https://github.com/Code-Platoon-Compass/COMPASS)** · Code Platoon Organized Materials: Personalized Access and Search System · *Built at [Code Platoon](https://www.codeplatoon.org)*
+
+
+<img height="128" alt="compass lockup" src="https://github.com/user-attachments/assets/d93e446f-0592-4f0d-a7de-4032915313a3" />
