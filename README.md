@@ -282,12 +282,12 @@ The following features were scoped and designed but deferred to a future version
 
 | Name | GitHub |
 |---|---|
-| Kami | [@kamivision](https://github.com/Kamivision) |
-| Jakob | [@JakobPagel](https://github.com/JakobPagel) |
+| Kami | [@Kamivision](https://github.com/Kamivision) |
 | Ericka | [@2017eerickson](https://github.com/2017eerickson) |
 | Tiffany | [@wang2929](https://github.com/wang2929) |
 | Elia | [@maffiemaffie](https://github.com/maffiemaffie) |
-| Brandon | [@hLVRG-creator](https://github.com/LVRG-creator) |
+| Jakob | [@JakobPagel](https://github.com/JakobPagel) |
+| Brandon | [@LVRG-creator](https://github.com/LVRG-creator) |
 
 ---
 
