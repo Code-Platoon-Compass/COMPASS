@@ -59,6 +59,7 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 ![Google Gemini](https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
 
 COMPASS is a personalized student resource dashboard built for Code Platoon. It centralizes every resource a student needs — daily links, curriculum materials, vocabulary help, timezone tools, and more — into a single, cohort-aware home base. No more digging through Google Drive, Slack channels, and a dozen bookmarks.
 
