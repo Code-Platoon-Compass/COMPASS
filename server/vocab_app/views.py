@@ -28,7 +28,7 @@ class VocabListView(APIView):
 
         Request body:
             {
-                "lecture_url": "http://3.12.198.12/..."
+                "lecture_url": "https://codeplatoon.github.io/"
             }
 
         Returns:
@@ -40,7 +40,7 @@ class VocabListView(APIView):
         if not lecture_url:
             return Response({"error": "lecture_url is required"}, status= s.HTTP_400_BAD_REQUEST)
         
-        r = '^http://3\.12\.198\.12.'
+        r = '^https://codeplatoon.github.io/'
         
         if not re.match(r, lecture_url):
             return Response({"error": "Invalid lecture_url"}, status= s.HTTP_400_BAD_REQUEST)
@@ -69,8 +69,8 @@ class VocabListView(APIView):
         Request body:
             {
                 "lecture_urls": [
-                    "http://3.12.198.12/lecture1",
-                    "http://3.12.198.12/lecture2"
+                    "https://codeplatoon.github.io/",
+                    "https://codeplatoon.github.io/"
                 ]
             }
 
@@ -84,7 +84,7 @@ class VocabListView(APIView):
         if not lecture_urls or not isinstance(lecture_urls, list):
             return Response({"error": "at least one lecture_url is required and lecture_urls must be a list"}, status= s.HTTP_400_BAD_REQUEST)
         
-        r = '^http://3\.12\.198\.12.'
+        r = '^https://codeplatoon.github.io/'
         
         for lecture_url in lecture_urls:
             if not re.match(r, lecture_url):
