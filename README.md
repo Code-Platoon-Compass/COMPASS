@@ -119,7 +119,26 @@ COMPASS/
 
    This will spin up all services: the Django backend, PostgreSQL database, React frontend, and Nginx reverse proxy.
 
-4. **Access the app**
+4. **Seeding Database**
+
+   1. Go to the server container with the Django web server
+   2. Run migrations
+      ```bash
+      python manage.py makemigrations
+      python manage.py migrate
+      ```
+   4. Go to the database container
+   5. Go to the seed_db folder
+   6. Seed the database:
+   Two options: Either run the run.sh script or the .sql script:
+      ```bash
+      ./seed.sh
+      ```
+      ```bash
+      psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f init_instructors.sql
+      ```
+      
+5. **Access the app**
 
    Open your browser and navigate to `http://localhost`.
 
@@ -157,54 +176,7 @@ The frontend also requires its own `.env` file inside the `client/` directory:
 
 All endpoints are prefixed with `/api/v1/`.
 
-### Authentication
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/login` | Student login via Google OAuth |
-| `POST` | `/logout` | Log out |
-| `POST` | `/cohorts/:cohort-id/students` | Student self-registration (requires invite code + valid email) |
-| `POST` | `/instructors` | Create a new instructor account (requires master instructor API key) |
-
-### Cohorts
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/cohorts` | Create a new cohort |
-| `GET` | `/cohorts/:cohort-id/invite` | Retrieve the cohort invite code |
-
-### Valid Emails
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cohorts/:cohort-id/emails` | List approved student emails |
-| `POST` | `/cohorts/:cohort-id/emails` | Add an approved email |
-| `PUT` | `/cohorts/:cohort-id/emails/:id` | Update an approved email |
-| `DELETE` | `/cohorts/:cohort-id/emails/:id` | Remove an approved email |
-
-### Daily Links
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cohorts/:cohort-id/daily-links/` | List daily links for a cohort |
-| `POST` | `/cohorts/:cohort-id/daily-links/` | Add a daily link |
-| `PUT` | `/cohorts/:cohort-id/daily-links/:id` | Update a daily link |
-| `DELETE` | `/cohorts/:cohort-id/daily-links/:id` | Remove a daily link |
-
-### Resource Links
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cohorts/:cohort-id/resource-links/` | List resource links for a cohort |
-| `POST` | `/cohorts/:cohort-id/resource-links/` | Add a resource link |
-| `PUT` | `/cohorts/:cohort-id/resource-links/:id` | Update a resource link |
-| `DELETE` | `/cohorts/:cohort-id/resource-links/:id` | Remove a resource link |
-
-### Utilities
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/vocab` | Submit a curriculum link; returns a Gemini-generated list of vocab terms and definitions |
+A list of endpoints with explanations and examples can be found in the [wiki](https://github.com/Code-Platoon-Compass/COMPASS/wiki/How-to-use-the-Web-Server-for-Instructors)
 
 ---
 
