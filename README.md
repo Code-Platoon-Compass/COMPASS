@@ -155,10 +155,19 @@ COMPASS/
 
    Also create a `.env` file inside the `client/` directory:
    ```bash
-   cp client/example_env client/.env
+   cp client/client_env_example client/.env
    ```
 
    Fill in the values in both files — see [Environment Variables](#environment-variables) below.
+
+3. **Install the dependencies and build the frontend**
+
+   In the client folder:
+   ```bash
+   cd client
+   npm run install
+   npm run build
+   ```
 
 3. **Start the application**
    ```bash
