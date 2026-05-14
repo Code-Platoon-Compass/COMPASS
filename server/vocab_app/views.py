@@ -23,6 +23,8 @@ class VocabListView(APIView):
 
         If a vocab list already exists in cache or the database for the URL, it is returned.
         Otherwise, a new vocab list is generated via Gemini and returned.
+        
+        # Regex validates lecture_url starts with "http://3.12.198.12/"
 
         Request body:
             {
