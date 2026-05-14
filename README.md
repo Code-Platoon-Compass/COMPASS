@@ -3,9 +3,6 @@
 
 <img width="512" alt="logo vertical" src="https://github.com/user-attachments/assets/2579ac58-b79a-461b-9b7a-875d38c49b1e" />
 
-## Video Demo
-[<img width="512" alt="thumbnail" src="https://github.com/user-attachments/assets/92aaaab1-8a8b-4bbc-8df6-ab9578557757" />](https://example.com)
-
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -17,6 +14,9 @@
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 ![Google Gemini](https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
+
+## Video Demo
+[<img width="512" alt="thumbnail" src="https://github.com/user-attachments/assets/92aaaab1-8a8b-4bbc-8df6-ab9578557757" />](https://example.com)
 
 COMPASS is a personalized student resource dashboard built for Code Platoon. It centralizes every resource a student needs — daily links, curriculum materials, vocabulary help, timezone tools, and more — into a single, cohort-aware home base. No more digging through Google Drive, Slack channels, and a dozen bookmarks.
 
