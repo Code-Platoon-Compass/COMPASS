@@ -283,7 +283,7 @@ The following features were scoped and designed but deferred to a future version
 | Name | GitHub |
 |---|---|
 | Name | [@handle]() |
-| Name | [@handle]() |
+| Jakob | [@JakobPagel(https://github.com/JakobPagel) |
 | Ericka | [@2017eerickson](https://github.com/2017eerickson) |
 | Tiffany | [@wang2929](https://github.com/wang2929) |
 | Elia | [@maffiemaffie](https://github.com/maffiemaffie) |
