@@ -1,5 +1,5 @@
 import CheckIn from "../components/widgets/CheckIn";
-import Vocab from "../components/Vocab";
+import Vocab from "../components/widgets/Vocab";
 import DailyLinks from "../components/widgets/DailyLinks";
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';

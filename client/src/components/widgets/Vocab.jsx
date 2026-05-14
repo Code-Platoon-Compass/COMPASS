@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getVocabList } from '../utilities/vocabUtilities';
+import { getVocabList } from '../../utilities/vocabUtilities';
 
 export default function Vocab() {
   const [vocabList, setVocabList] = useState(null);

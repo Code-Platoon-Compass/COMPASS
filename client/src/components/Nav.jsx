@@ -1,7 +1,7 @@
 import miniLogo from '../assets/compass-mini.svg';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
-import TimezoneClock from './TimezoneClock';
+import TimezoneClock from './widgets/TimezoneClock';
 
 export default function Nav() {
     const navigate = useNavigate();
