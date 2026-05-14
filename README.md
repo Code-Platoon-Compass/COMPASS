@@ -1,7 +1,7 @@
 # COMPASS
 ### Code Platoon Organized Materials: Personalized Access and Search System
 
-https://github.com/user-attachments/assets/9d8f2cc2-f968-4f7a-b373-617d0cb2f47b
+<img width="512" alt="logo vertical" src="https://github.com/user-attachments/assets/2579ac58-b79a-461b-9b7a-875d38c49b1e" />
 
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
@@ -18,10 +18,6 @@ https://github.com/user-attachments/assets/9d8f2cc2-f968-4f7a-b373-617d0cb2f47b
 COMPASS is a personalized student resource dashboard built for Code Platoon. It centralizes every resource a student needs — daily links, curriculum materials, vocabulary help, timezone tools, and more — into a single, cohort-aware home base. No more digging through Google Drive, Slack channels, and a dozen bookmarks.
 
 ---
-
-https://github.com/user-attachments/assets/b5ddbb2e-7634-4491-9ffd-92b04a740b2f
-
-
 
 ## Table of Contents
 
