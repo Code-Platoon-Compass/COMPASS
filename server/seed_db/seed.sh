@@ -1,2 +1,2 @@
 #!/bin/bash
-psql -U username -d myDataBase -a -f init_instructors.sql
+psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f init_instructors.sql
