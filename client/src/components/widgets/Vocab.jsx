@@ -1,10 +1,31 @@
+/**
+ * AI-powered curriculum vocabulary generator widget.
+ * Accepts a curriculum URL, calls the vocab API, and renders a term/definition list.
+ */
 import { useState } from 'react'
 import { getVocabList } from '../../utilities/vocabUtilities';
 
+/**
+ * Vocab widget that lets students paste a curriculum URL and generate
+ * relevant vocabulary terms and definitions via the Gemini-powered vocab API.
+ *
+ * State:
+ * - `vocabList` — array of `{ term, definition }` objects returned by the API, or `null`
+ * - `loading`   — true while the API request is in flight
+ *
+ * The results area has three display states:
+ * 1. Loading — shows a loading message while the request is pending
+ * 2. Results — renders a two-column term/definition list when `vocabList` is populated
+ * 3. Empty   — shows a placeholder prompt when no request has been made yet
+ */
 export default function Vocab() {
   const [vocabList, setVocabList] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Handles form submission: clears previous results, fetches vocab for the
+   * submitted URL, and updates state. Alerts the user on error.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

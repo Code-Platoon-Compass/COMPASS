@@ -3,8 +3,25 @@ import Nav from '../components/Nav';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 
+/** Technologies used to build COMPASS, displayed as pills in the tech stack section. */
 const TECH_STACK = ['React', 'Django', 'Python', 'Gemini API', 'Google SSO', 'PostgreSQL', 'Redis', 'Docker', 'Tailwind CSS'];
 
+/**
+ * HomePage renders the full About/landing page.
+ *
+ * Sections:
+ * - Nav + Hero
+ * - Mission — explains the problem COMPASS solves for Code Platoon students
+ * - Features — four feature cards (curriculum access, Chicago clock, AI vocab, link hub)
+ * - Tech Stack — pill list of technologies used
+ * - CTA Band — prompts unauthenticated users to navigate to /auth
+ * - Footer
+ *
+ * Tailwind layout:
+ * - This page uses named CSS classes (e.g. `.mission`, `.features`, `.cta-band`)
+ *   defined in the index.css rather than inline Tailwind utilities.
+ * - The only direct Tailwind usage is `mt-10` on the second pull-quote for spacing.
+ */
 const HomePage = () => {
   const navigate = useNavigate();
 

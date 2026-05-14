@@ -1,3 +1,12 @@
+/**
+ * Sticky top navigation bar shared across all pages.
+ *
+ * - Logo click navigates to `/`
+ * - When a user is authenticated: shows the live TimezoneClock and LogoutButton
+ * - When unauthenticated: shows a "Get Started" button linking to `/auth`
+ *
+ * Reads `user` from the router outlet context set by the parent route.
+ */
 import miniLogo from '../assets/compass-mini.svg';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import LogoutButton from './LogoutButton';

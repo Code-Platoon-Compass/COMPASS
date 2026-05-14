@@ -1,3 +1,4 @@
+
 import CheckIn from "../components/widgets/CheckIn";
 import Vocab from "../components/widgets/Vocab";
 import DailyLinks from "../components/widgets/DailyLinks";
@@ -5,13 +6,41 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { useOutletContext } from "react-router-dom";
 
+/**
+ * Returns a time-appropriate greeting based on the current local hour.
+ *
+ * @returns {"Good morning" | "Good afternoon" | "Good evening"}
+ */
 function getGreeting() {
     const hour = new Date().getHours();
     if (hour < 12) return "Good morning";
     if (hour < 17) return "Good afternoon";
     return "Good evening";
 }
-
+/**
+ * Dashboard is the main authenticated view for logged-in students.
+ *
+ * Reads the `user` object from the router outlet context (set by the parent route).
+ * Derives the user's first name for the personalized hero greeting.
+ 
+ * Tailwind layout:
+ * - Page shell:   `min-h-screen flex flex-col` — full-height sticky-footer pattern
+ * - Main:         `flex-1` — grows to fill remaining height, pushing Footer to the bottom
+ * - Row 1:        `grid grid-cols-2 gap-6` — two equal-width widget cards side by side
+ * - Row 2:        full-width single card, no grid — DailyLinks renders a 5-column layout internally
+ * - Row 3:        no wrapper — Vocab renders its own card with internal padding
+ * - Row spacing:  `space-y-6` on <main> adds consistent vertical gaps between all rows
+ * - Cards:        `bg-white border border-gray-200 rounded-none overflow-hidden`
+ *                 `rounded-none` enforces the square-corner card style; card headers use
+ *                 `border-b border-gray-200` as a separator
+ *
+ * Design tokens (arbitrary values):
+ * - Navy hero background:  `bg-[#0d2e4a]`
+ * - Orange accent:         `text-[#e7771e]` / `bg-[#e7771e]`
+ * - Teal section labels:   `text-[#3b7f82]`
+ * - Page background:       `bg-[#f0f2f5]`
+ 
+ */
 export default function Dashboard() {
     const { user } = useOutletContext();
     const firstName = user?.name?.split(" ")[0];
