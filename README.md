@@ -80,7 +80,6 @@ COMPASS is a personalized student resource dashboard built for Code Platoon. It 
 COMPASS/
 ├── client/          # React frontend (Vite)
 ├── server/          # Django backend
-├── db/              # Database init scripts
 ├── nginx/           # Nginx configuration
 ├── docker-compose.yml
 ├── example_env      # Template for required environment variables
