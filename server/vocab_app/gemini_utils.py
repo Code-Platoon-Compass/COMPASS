@@ -24,8 +24,8 @@ class VocabListSchema(BaseModel):
 CACHE_TTL = 60 * 60 * 24  # 24 hours in seconds
 
 # Temporary disable until GEMINI_API_KEY is available.
-# client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
-client = None
+client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+# client = None
 
 GEMINI_MODEL = 'gemini-2.5-flash-lite'
 

@@ -14,25 +14,28 @@ format request body:
 {
     "name": "cool_cohort3",
     "resource_links": 
-    [{
-        "url": "http://hello.com",
-        "label": "hello"
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
         }, 
         {
             "label": "cool",
             "url": "http://cool.com"
         }
     ],
-    "daily_links": [{
-        "url": "http://hello.com",
-        "label": "hello"
+    "daily_links": 
+    [
+        {
+            "url": "http://hello.com",
+            "label": "hello"
         }, 
         {
             "label": "cool",
             "url": "http://cool.com"
         }
     ],
-    "student_emails": ["sal@sal.com", "steve@steve.com", "oscar@oscar.com"]
+    "email": ["sal@sal.com", "steve@steve.com", "oscar@oscar.com"]
 }
 '''
 
@@ -84,6 +87,26 @@ def multiple_emails(request, cohort_id:str):
         return validemail_data  
     except:
         return []
+
+def find_or_create_cohort(data:dict) -> dict:
+    existing_cohort = Cohort.objects.filter(name=data['name'])
+    if len(existing_cohort) > 0:
+        return {
+            'id':existing_cohort[0].id,
+            'name':data['name'],
+            'invite_code': existing_cohort[0].invite_code,
+            'create': False,
+            'edit': True
+        }
+    else:
+        new_cohort = CohortSerializer(data=data)
+        if new_cohort.is_valid():
+            new_cohort.save()
+            ret = new_cohort.data.copy()
+            ret['create'] = True
+            return ret
+        else:
+            return new_cohort.errors
 
 class AllDailyLinksView(APIView):
     authentication_classes = []
@@ -262,38 +285,35 @@ class CohortView(APIView):
                 'name': request.data['name'],
                 'invite_code': token_urlsafe(10)
             }
-            new_cohort = CohortSerializer(data=cohort_data)
-            if new_cohort.is_valid():
-                new_cohort.save()
-                ret = new_cohort.data.copy()
-                new_id = new_cohort.data['id']
-                # check to see if there's any daily links, resource links, or email lists
-                daily_link_data = multiple_daily_links_data(request, new_id)
-                if daily_link_data:
-                    new_dailies = DailyLinkSerializer(data=daily_link_data, many=True)
-                    if new_dailies.is_valid():
-                        new_dailies.save()
-                        ret['daily'] = True
-                    else:
-                        ret['daily'] = new_dailies.errors
-                resource_link_data = multiple_resource_links_data(request, new_id)
-                if resource_link_data:
-                    new_resources = ResourceLinkSerializer(data=resource_link_data, many=True)
-                    if new_resources.is_valid():
-                        new_resources.save()
-                        ret['resource'] = True
-                    else:
-                        ret['resource'] = new_resources.errors
-                email_data = multiple_emails(request, new_id)
-                if email_data:
-                    new_emails = ValidEmailSerializer(data=email_data, many=True)
-                    if new_emails.is_valid():
-                        new_emails.save()
-                        ret['email'] = True
-                    else:
-                        ret['email'] = new_emails.errors
-                return Response(ret, status=s.HTTP_201_CREATED)
-            else:
-                return Response(new_cohort.errors, status=s.HTTP_400_BAD_REQUEST)
+            ret = find_or_create_cohort(cohort_data)
+            if 'id' not in ret:
+                return Response(ret, status=s.HTTP_400_BAD_REQUEST)
+            new_id = ret['id']
+            # check to see if there's any daily links, resource links, or email lists
+            daily_link_data = multiple_daily_links_data(request, new_id)
+            if daily_link_data:
+                new_dailies = DailyLinkSerializer(data=daily_link_data, many=True)
+                if new_dailies.is_valid():
+                    new_dailies.save()
+                    ret['daily'] = True
+                else:
+                    ret['daily'] = new_dailies.errors
+            resource_link_data = multiple_resource_links_data(request, new_id)
+            if resource_link_data:
+                new_resources = ResourceLinkSerializer(data=resource_link_data, many=True)
+                if new_resources.is_valid():
+                    new_resources.save()
+                    ret['resource'] = True
+                else:
+                    ret['resource'] = new_resources.errors
+            email_data = multiple_emails(request, new_id)
+            if email_data:
+                new_emails = ValidEmailSerializer(data=email_data, many=True)
+                if new_emails.is_valid():
+                    new_emails.save()
+                    ret['email'] = True
+                else:
+                    ret['email'] = new_emails.errors
+            return Response(ret, status=s.HTTP_201_CREATED)
         else:
             return Response("Unable to authorize user", status=s.HTTP_403_FORBIDDEN)

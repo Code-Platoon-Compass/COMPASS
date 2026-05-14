@@ -24,5 +24,7 @@ services:
     #   - ./postgres-data:/var/lib/postgresql/data
     env_file:
       - .env
+    volumes:
+      - ./seed_db:/seed_db
     ports:
       - "5433:5432"

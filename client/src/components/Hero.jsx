@@ -1,8 +1,9 @@
 import compassLogo from '../assets/COMPASS.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 export default function Hero() {
     const navigate = useNavigate();
+    const { user } = useOutletContext();
   return (
     <div>
           <div className="hero">
@@ -20,7 +21,7 @@ export default function Hero() {
                     <strong>Built by students, for students:</strong> this app demonstrates the full-stack skills taught in the program so you can learn them faster than we did.
                   </p>
                 <div className="hero-btns">
-                  <button className="btn-primary" onClick={() => navigate('/auth')}>&#8594; Explore resources</button>
+                  <button className="btn-primary" onClick={() => navigate(user ? '/dashboard' : '/auth')}>&#8594; Explore resources</button>
                  
                 </div>
                 <div className="hero-stats">
@@ -39,7 +40,7 @@ export default function Hero() {
                 </div>
               </div>
               <div className="hero-logo">
-                <img src={compassLogo} alt="COMPASS logo" width="320" height="320" />
+                <img src={compassLogo} alt="COMPASS logo" width="520" height="320" />
               </div>
             </div>
           </div></div>

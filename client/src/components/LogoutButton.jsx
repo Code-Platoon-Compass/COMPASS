@@ -21,7 +21,7 @@ export default function LogoutButton() {
         }
 
         setUser(null);
-        navigate('/auth');
+        navigate('/');
     };
 
     return (
