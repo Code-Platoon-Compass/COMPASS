@@ -3,6 +3,9 @@
 
 <img width="512" alt="logo vertical" src="https://github.com/user-attachments/assets/2579ac58-b79a-461b-9b7a-875d38c49b1e" />
 
+## Video Demo
+[<img width="512" alt="thumbnail" src="https://github.com/user-attachments/assets/92aaaab1-8a8b-4bbc-8df6-ab9578557757" />](https://example.com)
+
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
