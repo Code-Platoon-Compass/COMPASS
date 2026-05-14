@@ -177,14 +177,8 @@ COMPASS/
       ```
    4. Go to the database container
    5. Go to the seed_db folder
-   6. Seed the database:
-   Two options: Either run the run.sh script or the .sql script:
-      ```bash
-      ./seed.sh
-      ```
-      ```bash
-      psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f init_instructors.sql
-      ```
+   6. Seed the database by runing the `./seed.sh` script
+   7. Copy the API key as this is used for instructor endpoints
       
 5. **Access the app**
 
@@ -272,7 +266,7 @@ The following features were scoped and designed but deferred to a future version
 | [Name] | [@handle] |
 | [Name] | [@handle] |
 | [Ericka] | [@2017eerickson] |
-| [Name] | [@handle] |
+| [Tiffany] | [@wang2929] |
 | [Name] | [@handle] |
 | [Name] | [@handle] |
 
