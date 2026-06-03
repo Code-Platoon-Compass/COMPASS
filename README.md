@@ -66,7 +66,7 @@ COMPASS is a personalized student resource dashboard built for Code Platoon. It 
 |---|---|
 | Frontend | React, Vite, Tailwind CSS |
 | Backend | Django, Django REST Framework |
-| Auth | SimpleJWT |
+| Auth | SimpleJWT, Google SSO |
 | Database | PostgreSQL |
 | AI | Google Gemini API |
 | Containerization | Docker, Docker Compose |
